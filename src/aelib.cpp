@@ -99,7 +99,7 @@ namespace aelib {
             throw std::runtime_error("Allocation error");
         } else {
             std::wstring wstr(res);
-            std::free(static_cast<void *>(res));
+            std::free(res);
             return wstr;
         }
     }

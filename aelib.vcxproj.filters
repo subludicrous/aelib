@@ -15,19 +15,22 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\aebase.h">
+    <ClInclude Include="include\utf8.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\aelib.hpp">
+    <ClInclude Include="include\ae\ae.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\aestdio.h">
+    <ClInclude Include="include\ae\base.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\aestring.h">
+    <ClInclude Include="include\ae\stdio.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\winapi_imports.h">
+    <ClInclude Include="include\ae\string.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ae\winapi_imports.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
