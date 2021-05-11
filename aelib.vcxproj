@@ -153,8 +153,8 @@
     <ClInclude Include="include\ae\base.h" />
     <ClInclude Include="include\ae\stdio.h" />
     <ClInclude Include="include\ae\string.h" />
-    <ClInclude Include="include\ae\winapi_imports.h" />
-    <ClInclude Include="include\utf8.hpp" />
+    <ClInclude Include="include\ae\utf8.hpp" />
+    <ClInclude Include="include\winapi_imports.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\aelib.cpp" />

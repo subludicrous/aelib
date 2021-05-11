@@ -21,7 +21,7 @@ namespace aelib {
 
     // this assumes a correctly encoded UTF-8 string
     [[nodiscard]]
-    constexpr std::size_t u8len(std::string_view const str) {
+    constexpr std::size_t u8len(std::string_view const str) noexcept {
         std::size_t sz{};
         for (auto it = std::cbegin(str); it != std::cend(str); ) {
             auto b = u8bytes(*it);

@@ -18,9 +18,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\ae\winapi_imports.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\ae\ae.hpp">
       <Filter>Header Files\ae</Filter>
     </ClInclude>
@@ -33,8 +30,11 @@
     <ClInclude Include="include\ae\string.h">
       <Filter>Header Files\ae</Filter>
     </ClInclude>
-    <ClInclude Include="include\utf8.hpp">
+    <ClInclude Include="include\ae\utf8.hpp">
       <Filter>Header Files\ae</Filter>
+    </ClInclude>
+    <ClInclude Include="include\winapi_imports.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
