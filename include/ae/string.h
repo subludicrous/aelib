@@ -6,6 +6,9 @@
 * Licensed under the terms of the MIT licence.
 */
 
+#ifndef AE_STRING_H
+#define AE_STRING_H
+
 #include <aebase.h>
 
 #include <uchar.h>
@@ -70,3 +73,5 @@ void AEAPI free_u8envp(char ** envp);
 #endif
 
 AELIB_C_END
+
+#endif

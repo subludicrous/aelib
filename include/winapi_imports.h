@@ -6,12 +6,18 @@
 * Licensed under the terms of the MIT licence.
 */
 
-#ifndef TOOLNS_AELIB_WINAPI_IMPORTS_H
-#define TOOLNS_AELIB_WINAPI_IMPORTS_H
+#ifndef WINAPI_IMPORTS_H
+#define WINAPI_IMPORTS_H
 
-#include <aebase.h>
+#include <ae/base.h>
 
 #ifdef WINCHECK
+
+#ifndef __cplusplus 
+
+typedef unsigned short wchar_t;
+
+#endif
 
 // Windows types
 #define WINAPI __stdcall
@@ -27,13 +33,16 @@ typedef const char *LPCCH;
 typedef long long LONG_PTR;
 
 #ifdef __cplusplus
+
 constexpr auto CP_UTF8 = 65001U;
 constexpr auto MB_PRECOMPOSED = 0x00000001U;
 constexpr auto STD_OUTPUT_HANDLE = static_cast<DWORD>(-11);
 constexpr auto STD_ERROR_HANDLE = static_cast<DWORD>(-12);
 constexpr auto ENABLE_VIRTUAL_TERMINAL_PROCESSING = 0x0004;
 constexpr auto INVALID_HANDLE_VALUE = reinterpret_cast<HANDLE>(static_cast<LONG_PTR>(-1));
+
 #else
+
 #define CP_UTF8             (65001U)
 #define MB_PRECOMPOSED      (1U)
 #define STD_OUTPUT_HANDLE   ((DWORD)-11)
@@ -41,52 +50,48 @@ constexpr auto INVALID_HANDLE_VALUE = reinterpret_cast<HANDLE>(static_cast<LONG_
 #define ENABLE_VIRTUAL_TERMINAL_PROCESSING  0x0004
 #define INVALID_HANDLE_VALUE ((HANDLE)(LONG_PTR)-1)
 
-#include <wctype.h>
-#endif // __cplusplus
-
-#ifdef __cplusplus
-extern "C" {
 #endif
 
-    __declspec(dllimport) int          WINAPI MultiByteToWideChar(
-        UINT CodePage,
-        DWORD dwFlags,
-        LPCCH lpMultiByteStr,
-        int cbMultiByte,
-        LPWSTR lpWideCharStr,
-        int cchWideChar
-    );
+AELIB_C_BEGIN
 
-    __declspec(dllimport) int          WINAPI WideCharToMultiByte(
-        UINT CodePage,
-        DWORD dwFlags,
-        LPCWCH lpWideCharStr,
-        int cchWideChar,
-        LPSTR lpMultiByteStr,
-        int cbMultiByte,
-        LPCCH lpDefaultChar,
-        LPBOOL lpUsedDefaultChar
-    );
+__declspec(dllimport) int          WINAPI MultiByteToWideChar(
+    UINT CodePage,
+    DWORD dwFlags,
+    LPCCH lpMultiByteStr,
+    int cbMultiByte,
+    LPWSTR lpWideCharStr,
+    int cchWideChar
+);
 
-    __declspec(dllimport) HANDLE       WINAPI GetStdHandle(DWORD nStdHandle);
+__declspec(dllimport) int          WINAPI WideCharToMultiByte(
+    UINT CodePage,
+    DWORD dwFlags,
+    LPCWCH lpWideCharStr,
+    int cchWideChar,
+    LPSTR lpMultiByteStr,
+    int cbMultiByte,
+    LPCCH lpDefaultChar,
+    LPBOOL lpUsedDefaultChar
+);
 
-    __declspec(dllimport) BOOL         WINAPI GetConsoleMode(HANDLE hConsoleHandle, LPDWORD lpMode);
+__declspec(dllimport) HANDLE       WINAPI GetStdHandle(DWORD nStdHandle);
 
-    __declspec(dllimport) BOOL         WINAPI SetConsoleMode(HANDLE hConsoleHandle, DWORD dwMode);
+__declspec(dllimport) BOOL         WINAPI GetConsoleMode(HANDLE hConsoleHandle, LPDWORD lpMode);
 
-    __declspec(dllimport) UINT         WINAPI GetConsoleOutputCP(void);
+__declspec(dllimport) BOOL         WINAPI SetConsoleMode(HANDLE hConsoleHandle, DWORD dwMode);
 
-    __declspec(dllimport) BOOL         WINAPI SetConsoleOutputCP(UINT CodePage);
+__declspec(dllimport) UINT         WINAPI GetConsoleOutputCP(void);
 
-    __declspec(dllimport) HLOCAL       WINAPI LocalFree(HLOCAL hMem);
+__declspec(dllimport) BOOL         WINAPI SetConsoleOutputCP(UINT CodePage);
 
-    __declspec(dllimport) LPWSTR       WINAPI GetCommandLineW(void);
+__declspec(dllimport) HLOCAL       WINAPI LocalFree(HLOCAL hMem);
 
-    __declspec(dllimport) LPWSTR *     WINAPI CommandLineToArgvW(LPCWSTR lpCmdLine, int * pNumArgs);
+__declspec(dllimport) LPWSTR       WINAPI GetCommandLineW(void);
 
-#ifdef __cplusplus
-}
+__declspec(dllimport) LPWSTR *     WINAPI CommandLineToArgvW(LPCWSTR lpCmdLine, int * pNumArgs);
+
+AELIB_C_END
+
 #endif
 
-#endif // _WIN64
-#endif // !TOOLNS_AELIB_WINAPI_IMPORTS_H
+#endif

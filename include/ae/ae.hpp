@@ -9,8 +9,8 @@
 #ifndef AE_LIB_HPP
 #define AE_LIB_HPP
 
-#include <aestdio.h>
-#include <aestring.h>
+#include <ae/stdio.h>
+#include <ae/string.h>
 
 #include <iostream>
 #include <string>
@@ -19,12 +19,12 @@
 
 namespace aelib {
 
-    // from aestdio.h
+    // from ae/stdio.h
     using ::u8fopen;
     using ::press_any_key;
     using ::wpress_any_key;
 
-    // from aestring.h
+    // from ae/string.h
     using ::uint_to_binstr;
     using ::auint_to_binstr;
     using ::u8c_to_u32c;
@@ -72,8 +72,8 @@ namespace aelib {
     std::string AEAPI read_line();
 
 #else
-    using u8cin = std::cin;
-    using getline = std::getline;
+    auto& u8cin = std::cin;
+    using std::getline;
 #endif
 
     [[nodiscard]]
