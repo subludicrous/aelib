@@ -13,12 +13,6 @@
 
 #ifdef WINCHECK
 
-#ifndef __cplusplus 
-
-typedef unsigned short wchar_t;
-
-#endif
-
 // Windows types
 #define WINAPI __stdcall
 typedef int BOOL, *LPBOOL;
@@ -28,8 +22,8 @@ typedef unsigned long DWORD, *LPDWORD;
 typedef unsigned int UINT;
 typedef wchar_t * LPWSTR;
 typedef wchar_t const * LPCWSTR, * LPCWCH;
-typedef char *LPSTR;
-typedef const char *LPCCH;
+typedef char * LPSTR;
+typedef char const * LPCCH;
 typedef long long LONG_PTR;
 
 #ifdef __cplusplus

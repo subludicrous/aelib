@@ -1,9 +1,8 @@
 /**
-* Name: aelib.hpp
-* Description: Aesthetic library main header.
-* Created on: 2020-12-16
-* © 2020, 2021 subludicrous
-* Licensed under the terms of the MIT licence.
+* ae/ae.hpp
+* Author: subludicrous
+* Licence: see LICENCE.txt
+* Created on: 2021-12-16
 */
 
 #ifndef AE_LIB_HPP
@@ -16,6 +15,8 @@
 #include <string>
 #include <vector>
 #include <string_view>
+
+using namespace std::string_view_literals;
 
 namespace aelib {
 
@@ -96,7 +97,7 @@ namespace aelib {
         return static_cast<std::uint16_t>((lobyte(word) << 8U) + hibyte(word));
     }
 
-    constexpr auto REPLACEMENT = u8"\uFFFD";
+    constexpr auto REPLACEMENT = u8"\uFFFD"sv;
 
     constexpr bool AEAPI is_ascii(const char c) noexcept {
         if (static_cast<unsigned char>(c) & 0x80Ui8) {

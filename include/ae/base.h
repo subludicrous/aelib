@@ -1,4 +1,5 @@
 /**
+* ae/base.h
 * Author: subludicrous
 * Licence: see LICENCE.txt
 * Created on: 2021-02-02
@@ -25,10 +26,14 @@
 #define AELIB_C_BEGIN extern "C" {
 #define AELIB_C_END }
 
+#include <cstddef>
+
 #else
 
 #define AELIB_C_BEGIN
 #define AELIB_C_END
+
+#include <stddef.h>
 
 #endif
 

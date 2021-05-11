@@ -9,7 +9,7 @@
 #ifndef AE_STRING_H
 #define AE_STRING_H
 
-#include <aebase.h>
+#include <ae/base.h>
 
 #include <uchar.h>
 #include <stdint.h>
