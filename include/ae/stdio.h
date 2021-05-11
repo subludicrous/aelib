@@ -1,29 +1,26 @@
 /**
-* Name: aestdio.h
-* Description: Adds asprintf and vasprintf.
+* ae/stdio.h
+* Author: subludicrous
+* Licence: see LICENCE.txt
 * Created on: 2021-02-02
-* © 2021 subludicrous
-* Licensed under the terms of the MIT licence.
 */
 
-#ifndef AELIB_STDIO_H
-#define AELIB_STDIO_H
+#ifndef AE_STDIO_H
+#define AE_STDIO_H
 
-#include <aebase.h>
-
+#include <ae/base.h>
 #include <stdarg.h>
-#include <wctype.h>
 #include <stdio.h>
 
 AELIB_C_BEGIN
 
-int AEAPI vasprintf(char ** AERESTRICT ptr, const char * AERESTRICT format, va_list arg);
+int AEAPI vasprintf(char ** AERESTRICT ptr, char const * AERESTRICT format, va_list arg);
 
-int AEAPI asprintf(char ** AERESTRICT ptr, const char * AERESTRICT format, ...);
+int AEAPI asprintf(char ** AERESTRICT ptr, char const * AERESTRICT format, ...);
 
-int AEAPI vaswprintf(wchar_t ** AERESTRICT ptr, const wchar_t * AERESTRICT format, va_list arg);
+int AEAPI vaswprintf(wchar_t ** AERESTRICT ptr, wchar_t const * AERESTRICT format, va_list arg);
 
-int AEAPI aswprintf(wchar_t ** AERESTRICT ptr, const wchar_t * AERESTRICT format, ...);
+int AEAPI aswprintf(wchar_t ** AERESTRICT ptr, wchar_t const * AERESTRICT format, ...);
 
 /// <summary>
 /// Prints 'Press any key to continue . . .' and waits for wchar_t input.
@@ -44,7 +41,7 @@ wint_t AEAPI wpress_any_key(void);
 /// <param name="filename">Name of the file in UTF-8.</param>
 /// <param name="mode">The mode to open the file in.</param>
 /// <returns>A pointer to a 'FILE' or 'NULL' in the case of an error.</returns>
-FILE *AEAPI u8fopen(const char *filename, const char *mode);
+FILE * AEAPI u8fopen(char const * AERESTRICT filename, char const * AERESTRICT mode);
 
 AELIB_C_END
 
