@@ -13,25 +13,28 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\ae">
+      <UniqueIdentifier>{f2299474-4c04-4eb4-9c73-d060cd6712f1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\utf8.hpp">
+    <ClInclude Include="include\ae\winapi_imports.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\ae\ae.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\ae</Filter>
     </ClInclude>
     <ClInclude Include="include\ae\base.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\ae</Filter>
     </ClInclude>
     <ClInclude Include="include\ae\stdio.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\ae</Filter>
     </ClInclude>
     <ClInclude Include="include\ae\string.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\ae</Filter>
     </ClInclude>
-    <ClInclude Include="include\ae\winapi_imports.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="include\utf8.hpp">
+      <Filter>Header Files\ae</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
