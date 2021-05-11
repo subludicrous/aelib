@@ -6,7 +6,7 @@
 * Licensed under the terms of the MIT licence.
 */
 
-#include <aelib.hpp>
+#include <ae/ae.hpp>
 
 #include <stdexcept>
 #include <cwchar>

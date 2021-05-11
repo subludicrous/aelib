@@ -6,7 +6,7 @@
 * Licensed under the terms of the MIT licence.
 */
 
-#include <aestring.h>
+#include <ae/string.h>
 
 #include <winapi_imports.h>
 
