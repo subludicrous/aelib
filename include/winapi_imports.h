@@ -46,7 +46,7 @@ constexpr auto INVALID_HANDLE_VALUE = reinterpret_cast<HANDLE>(static_cast<LONG_
 
 #endif
 
-AELIB_C_BEGIN
+AE_C_BEGIN
 
 __declspec(dllimport) int          WINAPI MultiByteToWideChar(
     UINT CodePage,
@@ -84,7 +84,7 @@ __declspec(dllimport) LPWSTR       WINAPI GetCommandLineW(void);
 
 __declspec(dllimport) LPWSTR *     WINAPI CommandLineToArgvW(LPCWSTR lpCmdLine, int * pNumArgs);
 
-AELIB_C_END
+AE_C_END
 
 #endif
 

@@ -11,7 +11,7 @@
 #include <stdexcept>
 #include <cwchar>
 
-namespace aelib {
+namespace ae {
 
 #ifdef WINCHECK
 
@@ -125,10 +125,10 @@ namespace aelib {
 
     void uint_to_binstr(std::string& binstr, const std::uint64_t val, const std::size_t bits) {
         if (bits > 64) {
-            throw std::exception("'bits' is too big.");
+            throw std::logic_error("'bits' is too big.");
         }
         if (bits == 0) {
-            throw std::exception("'bits' is zero.");
+            throw std::logic_error("'bits' is zero.");
         }
         binstr.clear();
         binstr.reserve(bits);

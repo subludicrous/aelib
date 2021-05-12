@@ -15,10 +15,11 @@
 #include <string>
 #include <vector>
 #include <string_view>
+#include <algorithm>
 
 using namespace std::string_view_literals;
 
-namespace aelib {
+namespace ae {
 
     // from ae/stdio.h
     using ::u8fopen;
@@ -78,7 +79,7 @@ namespace aelib {
 #endif
 
     [[nodiscard]]
-    constexpr bool AEAPI is_power_of_2(unsigned int const i) noexcept {
+    constexpr bool AEAPI is_power_of_2(unsigned long long const i) noexcept {
         return (i & (i - 1U)) == 0U;
     }
 
@@ -99,19 +100,20 @@ namespace aelib {
 
     constexpr auto REPLACEMENT = u8"\uFFFD"sv;
 
-    constexpr bool AEAPI is_ascii(const char c) noexcept {
+    constexpr bool AEAPI is_ascii(char const c) noexcept {
         if (static_cast<unsigned char>(c) & 0x80Ui8) {
             return false;
         } else return true;
     }
 
-    constexpr bool AEAPI is_ascii(const std::string_view s) noexcept {
-        for (const char x : s) {
-            if (!is_ascii(x)) {
-                return false;
+    constexpr bool AEAPI is_ascii(std::string_view const s) noexcept {
+        return std::all_of(
+            std::begin(s),
+            std::end(s),
+            [](decltype(s)::value_type const el) {
+                return is_ascii(el);
             }
-        }
-        return true;
+        );
     }
 
     constexpr std::size_t AEAPI u8bytes(const char c) noexcept {
@@ -124,19 +126,19 @@ namespace aelib {
 
     void AEAPI uint_to_binstr(std::string& binstr, std::uint64_t val, std::size_t bits);
 
-    inline void AEAPI uint_to_binstr(std::string& binstr, std::uint8_t val) {
+    inline void AEAPI uint_to_binstr(std::string& binstr, std::uint8_t const val) {
         uint_to_binstr(binstr, val, 8);
     }
 
-    inline void AEAPI uint_to_binstr(std::string& binstr, std::uint16_t val) {
+    inline void AEAPI uint_to_binstr(std::string& binstr, std::uint16_t const val) {
         uint_to_binstr(binstr, val, 16);
     }
 
-    inline void AEAPI uint_to_binstr(std::string& binstr, std::uint32_t val) {
+    inline void AEAPI uint_to_binstr(std::string& binstr, std::uint32_t const val) {
         uint_to_binstr(binstr, val, 32);
     }
 
-    inline void AEAPI uint_to_binstr(std::string& binstr, std::uint64_t val) {
+    inline void AEAPI uint_to_binstr(std::string& binstr, std::uint64_t const val) {
         uint_to_binstr(binstr, val, 64);
     }
 
@@ -158,14 +160,14 @@ namespace aelib {
 
     class unicodization {
     private:
-        const bool args;
+        bool const args;
         int argc;
-        char **argv;
+        char ** argv;
         unsigned long original_mode;
         unsigned int cp;
         int prev_mode;
     public:
-        unicodization(const unicodization&) = delete;
+        unicodization(unicodization const&) = delete;
         unicodization(unicodization&&) = delete;
         unicodization();
         unicodization(int argc, char**& argv);
@@ -174,7 +176,7 @@ namespace aelib {
 
 #endif
 
-    inline void cppize(int const argc, const char * const * const argv, std::vector<std::string_view>& cppargs) {
+    inline void cppize(int const argc, char const * const * const argv, std::vector<std::string_view>& cppargs) {
         cppargs.reserve(static_cast<std::size_t>(argc));
         for (auto argn = 0; argn < argc; argn++) {
             cppargs.push_back(argv[argn]);
@@ -182,7 +184,7 @@ namespace aelib {
     }
 
     template<size_t sz>
-    inline void print_buf(const char(&str)[sz]) {
+    inline void print_hexbuf(char const (&str)[sz]) {
         for (auto elem = 0U; elem < sz; elem++) {
             auto const c = static_cast<unsigned char>(str[elem]);
             const char cp = std::isalnum(c) ? c : '.';
@@ -190,7 +192,7 @@ namespace aelib {
         }
     }
 
-    inline void print_buf(const std::string_view str) {
+    inline void print_hexbuf(std::string_view const str) {
         for (auto elem = 0U; elem < str.size(); elem++) {
             auto const c = static_cast<unsigned char>(str[elem]);
             std::printf("Elem. %02u: 0x%02x\n", elem, c);
@@ -198,37 +200,25 @@ namespace aelib {
     }
 
     template<size_t sz>
-    inline void print_binbuf(const char(&str)[sz]) {
+    inline void print_binbuf(char const (&str)[sz]) {
         char bbuf[9]{};
         for (auto elem = 0U; elem < sz; elem++) {
             auto const c = static_cast<unsigned char>(str[elem]);
-            aelib::uint_to_binstr(bbuf, c, 8);
+            ae::uint_to_binstr(bbuf, c, 8);
             std::printf("Elem. %02u: 0b%s\n", elem, bbuf);
         }
     }
 
-    inline void print_binbuf(const std::string_view str) {
+    inline void print_binbuf(std::string_view const str) {
         char bbuf[9]{};
         for (auto elem = 0U; elem < str.size(); elem++) {
             auto const c = static_cast<unsigned char>(str[elem]);
-            aelib::uint_to_binstr(bbuf, c, 8);
+            ae::uint_to_binstr(bbuf, c, 8);
             std::printf("Elem. %02u: 0b%s\n", elem, bbuf);
         }
     }
 
-    // replace with std's in C++23
-    template<typename ch>
-    [[nodiscard]]
-    constexpr bool contains(std::basic_string_view<ch> const sv, std::basic_string_view<ch> const what) noexcept {
-        return sv.find(what) != sv.npos;
-    }
-
-    // replace with std's in C++20
-    template<typename ch>
-    [[nodiscard]]
-    constexpr bool starts_with(std::basic_string_view<ch> const sv, std::basic_string_view<ch> const prefix) {
-        return sv.substr(0, prefix.size()) == prefix;
-    }
+    
 }
 
 #endif // !AE_LIB_HPP

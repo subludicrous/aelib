@@ -15,7 +15,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-AELIB_C_BEGIN
+AE_C_BEGIN
 
 int AEAPI uint_to_binstr(char *binstr, uint64_t val, size_t bits);
 
@@ -72,6 +72,6 @@ void AEAPI free_u8envp(char ** envp);
 
 #endif
 
-AELIB_C_END
+AE_C_END
 
 #endif

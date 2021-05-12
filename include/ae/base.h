@@ -23,8 +23,8 @@
 
 #ifdef __cplusplus
 
-#define AELIB_C_BEGIN extern "C" {
-#define AELIB_C_END }
+#define AE_C_BEGIN extern "C" {
+#define AE_C_END }
 
 #include <cstddef>
 

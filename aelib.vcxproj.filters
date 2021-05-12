@@ -16,6 +16,9 @@
     <Filter Include="Header Files\ae">
       <UniqueIdentifier>{f2299474-4c04-4eb4-9c73-d060cd6712f1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\ae">
+      <UniqueIdentifier>{4df77f04-8ce0-4aac-8698-6ff20e1c30b5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\ae\ae.hpp">
@@ -36,16 +39,19 @@
     <ClInclude Include="include\winapi_imports.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="prestd.hpp">
+      <Filter>Header Files\ae</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\aelib.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="src\ae\ae.cpp">
+      <Filter>Source Files\ae</Filter>
     </ClCompile>
-    <ClCompile Include="src\aestdio.c">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="src\ae\aestdio.c">
+      <Filter>Source Files\ae</Filter>
     </ClCompile>
-    <ClCompile Include="src\aestring.c">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="src\ae\aestring.c">
+      <Filter>Source Files\ae</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

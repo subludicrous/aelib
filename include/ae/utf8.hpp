@@ -1,6 +1,8 @@
-/*
-* © 2021 Nikola Stepanoski
-* Licensed under the MIT licence.
+/**
+* ae/utf8.hpp
+* Author: subludicrous
+* Licence: see LICENCE.txt
+* Created on: 2021-05-06
 */
 
 #ifndef UTF8_HPP
@@ -9,7 +11,7 @@
 #include <cstddef>
 #include <string_view>
 
-namespace aelib {
+namespace ae {
     [[nodiscard]]
     constexpr std::size_t u8bytes(char const c) noexcept {
         std::size_t u8s{};

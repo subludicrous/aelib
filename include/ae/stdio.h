@@ -12,7 +12,7 @@
 #include <stdarg.h>
 #include <stdio.h>
 
-AELIB_C_BEGIN
+AE_C_BEGIN
 
 int AEAPI vasprintf(char ** AERESTRICT ptr, char const * AERESTRICT format, va_list arg);
 
@@ -43,6 +43,6 @@ wint_t AEAPI wpress_any_key(void);
 /// <returns>A pointer to a 'FILE' or 'NULL' in the case of an error.</returns>
 FILE * AEAPI u8fopen(char const * AERESTRICT filename, char const * AERESTRICT mode);
 
-AELIB_C_END
+AE_C_END
 
 #endif
