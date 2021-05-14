@@ -12,13 +12,14 @@
 #define WINCHECK
 
 #define AERESTRICT __restrict
-#else
-#define AERESTRICT restrict
-
-#endif
 
 #ifndef _CRT_SECURE_NO_WARNINGS
 #define _CRT_SECURE_NO_WARNINGS
+#endif
+
+#else
+#define AERESTRICT restrict
+
 #endif
 
 #ifdef __cplusplus
@@ -26,14 +27,10 @@
 #define AE_C_BEGIN extern "C" {
 #define AE_C_END }
 
-#include <cstddef>
-
 #else
 
-#define AELIB_C_BEGIN
-#define AELIB_C_END
-
-#include <stddef.h>
+#define AE_C_BEGIN
+#define AE_C_END
 
 #endif
 

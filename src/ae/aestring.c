@@ -74,22 +74,10 @@ size_t AEAPI u32c_to_u8c(char32_t code, char *utf8str) {
 	}
 }
 
-char32_t AEAPI u8c_to_u32c(const char *str) {
-	if (!(*str & '\x80')) return (unsigned char) (*str); // if it's ASCII (most sign. bit is 0) return the char
-	unsigned char c = *str, bytes = 0;
-	while ((c <<= 1) & 0x80Ui8) ++bytes; // count bytes, check UTF-8 format for more info
-	char32_t result = 0U;
-	for (unsigned int i = bytes; i > 0U; --i) result |= (*(str + i) & 0x7F) << (6 * (bytes - i));
-	unsigned int mask = 1U;
-	for (unsigned int i = bytes; i < 6U; ++i) mask <<= 1, mask |= 1;
-	result |= (*str & mask) << (6 * bytes);
-	return result;
-}
-
 char * AEAPI auint_to_binstr(const uint64_t input, const size_t bits) {
 	if (bits > 64i64) return NULL;
 
-	char *output = malloc(bits + 1Ui64);
+	char * const output = malloc(bits + 1Ui64);
 	if (!output) {
 		return NULL;
 	}
@@ -106,12 +94,12 @@ char * AEAPI auint_to_binstr(const uint64_t input, const size_t bits) {
 #ifdef WINCHECK
 
 char * AEAPI au16str_to_u8str_winapi(const wchar_t * const utf16str) {
-	const size_t req_size = (size_t) WideCharToMultiByte(CP_UTF8, 0, utf16str, -1, NULL, 0, NULL, NULL);
+	size_t const req_size = (size_t) WideCharToMultiByte(CP_UTF8, 0, utf16str, -1, NULL, 0, NULL, NULL);
 	char * const utf8str = malloc(req_size);
 	if (utf8str == NULL) {
 		return NULL;
 	}
-	const int written = WideCharToMultiByte(CP_UTF8, 0, utf16str, -1, utf8str, (int) req_size, NULL, NULL);
+	int const written = WideCharToMultiByte(CP_UTF8, 0, utf16str, -1, utf8str, (int) req_size, NULL, NULL);
 	if ((size_t) written != req_size) {
 		free(utf8str);
 		return NULL;
@@ -214,8 +202,8 @@ bool AEAPI main_unicodize(
 void AEAPI main_deunicodize(
 	unsigned long const original_mode,
 	unsigned int const cp,
-	int const prev_mode)
-{
+	int const prev_mode
+) {
 	// PART 1: FREE UTF-8 ARGV
 	// moved
 	// PART 2: RESET OUTPUT

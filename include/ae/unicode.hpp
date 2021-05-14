@@ -1,12 +1,12 @@
 /**
-* ae/utf8.hpp
+* ae/unicode.hpp
 * Author: subludicrous
 * Licence: see LICENCE.txt
 * Created on: 2021-05-06
 */
 
-#ifndef UTF8_HPP
-#define UTF8_HPP
+#ifndef AE_UNICODE_HPP
+#define AE_UNICODE_HPP
 
 #include <cstddef>
 #include <string_view>
@@ -21,7 +21,7 @@ namespace ae {
         return u8s;
     }
 
-    // this assumes a correctly encoded UTF-8 string
+    // assumes legit UTF-8
     [[nodiscard]]
     constexpr std::size_t u8len(std::string_view const str) noexcept {
         std::size_t sz{};
@@ -34,6 +34,7 @@ namespace ae {
         return sz;
     }
 
+    // assumes legit UTF-8
     [[nodiscard]]
     constexpr char32_t u8_to_u32(char const * const u8str) noexcept {
         constexpr std::byte cont_mask{ 0x80U };
@@ -73,7 +74,7 @@ namespace ae {
 
     // assumes legit UTF-32
     [[nodiscard]]
-    constexpr std::size_t req_bytes_utf8(char32_t const codepoint) noexcept {
+    constexpr std::size_t req_bytes_u8(char32_t const codepoint) noexcept {
         if (codepoint <= 0x7FUi32) {
             return 1U;
         }
@@ -96,7 +97,7 @@ namespace ae {
             codepoint >= 0xD800Ui32 && codepoint <= 0xDFFFUi32) {
             return false;
         }
-        auto const req_u8size = req_bytes_utf8(codepoint);
+        auto const req_u8size = req_bytes_u8(codepoint);
         return req_u8size == byte_count;
     }
 
@@ -148,6 +149,21 @@ namespace ae {
             ++pos;
         }
         return true;
+    }
+
+    // assumes legit UTF-32
+    [[nodiscard]]
+    constexpr std::size_t u32_to_u8(
+        char32_t const codepoint,
+        char * const out
+    ) {
+        auto const bc = req_bytes_u8(codepoint);
+        
+    }
+
+    [[nodiscard]]
+    constexpr auto u8_nextc(char const * const u8str) {
+
     }
 }
 

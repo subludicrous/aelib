@@ -33,7 +33,7 @@
     <ClInclude Include="include\ae\string.h">
       <Filter>Header Files\ae</Filter>
     </ClInclude>
-    <ClInclude Include="include\ae\utf8.hpp">
+    <ClInclude Include="include\ae\unicode.hpp">
       <Filter>Header Files\ae</Filter>
     </ClInclude>
     <ClInclude Include="include\winapi_imports.h">

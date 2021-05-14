@@ -10,7 +10,6 @@
 #define AE_STRING_H
 
 #include <ae/base.h>
-
 #include <uchar.h>
 #include <stdint.h>
 #include <stdbool.h>
@@ -28,13 +27,6 @@ char *AEAPI auint_to_binstr(uint64_t input, size_t bits);
 /// <param name="len"></param>
 /// <returns></returns>
 //const char* u8str_nextc(const char* str, int len = 1);
-
-/// <summary>
-/// Converts a UTF-8 character to UTF-32.
-/// </summary>
-/// <param name="str">A UTF-8 character.</param>
-/// <returns>A Unicode® codepoint.</returns>
-char32_t AEAPI u8c_to_u32c(const char* str);
 
 /// <summary>
 /// Converts a UTF-32 character to UTF-8.

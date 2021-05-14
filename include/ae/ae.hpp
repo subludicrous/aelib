@@ -158,7 +158,7 @@ namespace ae {
     [[nodiscard]]
     std::wstring AEAPI u8str_to_u16str(std::string_view s);
 
-    class unicodization {
+    class unicodization final {
     private:
         bool const args;
         int argc;
@@ -170,7 +170,7 @@ namespace ae {
         unicodization(unicodization const&) = delete;
         unicodization(unicodization&&) = delete;
         unicodization();
-        unicodization(int argc, char**& argv);
+        unicodization(int argc, char**& argv) noexcept;
         ~unicodization();
     };
 

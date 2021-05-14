@@ -123,21 +123,25 @@ namespace ae {
 
 #endif // _MSC_VER
 
-    void uint_to_binstr(std::string& binstr, const std::uint64_t val, const std::size_t bits) {
+    std::string uint_to_binstr(
+        std::uint64_t const val,
+        std::size_t const bits
+    ) {
         if (bits > 64) {
             throw std::logic_error("'bits' is too big.");
         }
         if (bits == 0) {
             throw std::logic_error("'bits' is zero.");
         }
-        binstr.clear();
-        binstr.reserve(bits);
+        std::string s;
+        s.reserve(bits);
         for (std::uint64_t i = 0x1Ui64 << (bits - 1Ui64); i; i >>= 1U) {
-            binstr.push_back((val & i) ? '1' : '0');
+            s.push_back((val & i) ? '1' : '0');
         }
+        return std::move(s);
     }
 
-    unicodization::unicodization(int const argc, char ** & argv) : args(true) {
+    unicodization::unicodization(int const argc, char ** & argv) noexcept : args(true) {
         main_unicodize(&original_mode, &cp, &prev_mode);
         auto const u8argv = get_u8argv();
         if (u8argv == nullptr) {

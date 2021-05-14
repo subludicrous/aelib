@@ -154,7 +154,7 @@
     <ClInclude Include="include\ae\base.h" />
     <ClInclude Include="include\ae\stdio.h" />
     <ClInclude Include="include\ae\string.h" />
-    <ClInclude Include="include\ae\utf8.hpp" />
+    <ClInclude Include="include\ae\unicode.hpp" />
     <ClInclude Include="include\winapi_imports.h" />
     <ClInclude Include="prestd.hpp" />
   </ItemGroup>
