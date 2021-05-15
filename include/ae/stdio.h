@@ -23,7 +23,7 @@ int AEAPI vaswprintf(wchar_t ** AERESTRICT ptr, wchar_t const * AERESTRICT forma
 int AEAPI aswprintf(wchar_t ** AERESTRICT ptr, wchar_t const * AERESTRICT format, ...);
 
 /// <summary>
-/// Prints 'Press any key to continue . . .' and waits for wchar_t input.
+/// Prints 'Press any key to continue . . .' and waits for char input.
 /// </summary>
 /// <returns>A 'int' representing the typed character.</returns>
 int AEAPI press_any_key(void);

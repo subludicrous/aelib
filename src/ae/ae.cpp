@@ -7,7 +7,7 @@
 */
 
 #include <ae/ae.hpp>
-
+#include <ae/winspec.h>
 #include <stdexcept>
 #include <cwchar>
 
@@ -15,88 +15,88 @@ namespace ae {
 
 #ifdef WINCHECK
 
-    bool unicode_thing::good() const {
+    bool win_in_u8::good() const {
         return std::wcin.good();
     }
 
-    unicode_thing& unicode_thing::operator>>(bool& val) {
+    win_in_u8& win_in_u8::operator>>(bool& val) {
         std::wcin >> val;
         return *this;
     }
 
-    unicode_thing& unicode_thing::operator>>(unsigned short& val) {
+    win_in_u8& win_in_u8::operator>>(unsigned short& val) {
         std::wcin >> val;
         return *this;
     }
-    unicode_thing& unicode_thing::operator>>(short& val) {
-        std::wcin >> val;
-        return *this;
-    }
-
-    unicode_thing& unicode_thing::operator>>(unsigned int& val) {
+    win_in_u8& win_in_u8::operator>>(short& val) {
         std::wcin >> val;
         return *this;
     }
 
-    unicode_thing& unicode_thing::operator>>(int& val) {
+    win_in_u8& win_in_u8::operator>>(unsigned int& val) {
         std::wcin >> val;
         return *this;
     }
 
-    unicode_thing& unicode_thing::operator>>(unsigned long& val) {
+    win_in_u8& win_in_u8::operator>>(int& val) {
         std::wcin >> val;
         return *this;
     }
 
-    unicode_thing& unicode_thing::operator>>(long& val) {
+    win_in_u8& win_in_u8::operator>>(unsigned long& val) {
         std::wcin >> val;
         return *this;
     }
 
-    unicode_thing& unicode_thing::operator>>(unsigned long long& val) {
+    win_in_u8& win_in_u8::operator>>(long& val) {
         std::wcin >> val;
         return *this;
     }
 
-    unicode_thing& unicode_thing::operator>>(long long& val) {
+    win_in_u8& win_in_u8::operator>>(unsigned long long& val) {
         std::wcin >> val;
         return *this;
     }
 
-    unicode_thing& unicode_thing::operator>>(float& val) {
+    win_in_u8& win_in_u8::operator>>(long long& val) {
         std::wcin >> val;
         return *this;
     }
 
-    unicode_thing& unicode_thing::operator>>(double& val) {
+    win_in_u8& win_in_u8::operator>>(float& val) {
         std::wcin >> val;
         return *this;
     }
 
-    unicode_thing& unicode_thing::operator>>(long double& val) {
+    win_in_u8& win_in_u8::operator>>(double& val) {
         std::wcin >> val;
         return *this;
     }
 
-    unicode_thing& unicode_thing::operator>>(std::string& val) {
+    win_in_u8& win_in_u8::operator>>(long double& val) {
+        std::wcin >> val;
+        return *this;
+    }
+
+    win_in_u8& win_in_u8::operator>>(std::string& val) {
         std::wstring wval;
         std::wcin >> wval;
         val = u16str_to_u8str(wval);
         return *this;
     }
 
-    unicode_thing u8cin{};
-
-    std::string AEAPI read_line() {
+    std::string win_in_u8::read_line() {
         std::wstring wstr;
         std::getline(std::wcin, wstr);
         return u16str_to_u8str(wstr);
     }
 
-    std::wstring AEAPI u8str_to_u16str(const std::string_view s) {
-        const auto res = au8str_to_u16str_winapi(s.data());
+    win_in_u8 u8cin{};
+
+    std::wstring AEAPI u8str_to_u16str(std::string_view const s) {
+        auto const res = au8str_to_u16str_winapi(s.data());
         if (res == nullptr) {
-            throw std::runtime_error("Allocation error");
+            throw std::bad_alloc{};
         } else {
             std::wstring wstr(res);
             std::free(res);
@@ -107,42 +107,18 @@ namespace ae {
     std::string u16str_to_u8str(const std::wstring_view s) {
         const auto res = au16str_to_u8str_winapi(s.data());
         if (res == nullptr) {
-            throw std::runtime_error("Allocation error");
+            throw std::bad_alloc{};
         } else {
             std::string str(res);
             std::free(res);
-            return str;
+            return std::move(str);
         }
-    }
-
-    std::string AEAPI u32c_to_u8c(const char32_t codepoint) {
-        char buf[5]{ 0, 0, 0, 0, 0 };
-        ::u32c_to_u8c(codepoint, buf);
-        return std::string(buf);
     }
 
 #endif // _MSC_VER
 
-    std::string uint_to_binstr(
-        std::uint64_t const val,
-        std::size_t const bits
-    ) {
-        if (bits > 64) {
-            throw std::logic_error("'bits' is too big.");
-        }
-        if (bits == 0) {
-            throw std::logic_error("'bits' is zero.");
-        }
-        std::string s;
-        s.reserve(bits);
-        for (std::uint64_t i = 0x1Ui64 << (bits - 1Ui64); i; i >>= 1U) {
-            s.push_back((val & i) ? '1' : '0');
-        }
-        return std::move(s);
-    }
-
     unicodization::unicodization(int const argc, char ** & argv) noexcept : args(true) {
-        main_unicodize(&original_mode, &cp, &prev_mode);
+        main_u8ize(&original_mode, &cp, &prev_mode);
         auto const u8argv = get_u8argv();
         if (u8argv == nullptr) {
             throw std::runtime_error("'get_u8argv' failed.");
@@ -153,11 +129,11 @@ namespace ae {
     }
 
     unicodization::unicodization() : args(false), argc(0), argv(nullptr) {
-        main_unicodize(&original_mode, &cp, &prev_mode);
+        main_u8ize(&original_mode, &cp, &prev_mode);
     }
 
     unicodization::~unicodization() {
-        main_deunicodize(original_mode, cp, prev_mode);
+        main_deu8ize(original_mode, cp, prev_mode);
         if (args) {
             free_u8argv(argc, argv);
         }

@@ -10,6 +10,7 @@
 
 #include <cstddef>
 #include <string_view>
+#include <string>
 
 namespace ae {
     [[nodiscard]]
@@ -153,7 +154,6 @@ namespace ae {
 
     // assumes legit UTF-32, writes null
     // @return required size w/o '\0'
-    [[nodiscard]]
     constexpr std::size_t u32_to_u8(
         char32_t codepoint,
         char * const out
@@ -165,7 +165,7 @@ namespace ae {
         }
         constexpr std::byte contb{ 0x80U };
 
-        // last char
+        // null terminator
         out[bcount] = '\0';
 
         if (bcount == 1U) {
@@ -173,7 +173,7 @@ namespace ae {
             return bcount;
         }
 
-        // in between
+        // from end backwards
         constexpr auto shift = 6U;
         std::byte u8part{};
         for (auto bc2 = bcount - 1U; bc2 >= 1; bc2--) {
@@ -188,7 +188,7 @@ namespace ae {
         constexpr std::byte bm0{ 0xF0U };
         std::byte const bmask = bm0 << (4U - bcount);
         u8part = std::byte(codepoint);
-        u8part &= bmask; // add bytes' count mask
+        u8part |= bmask; // add bytes' count mask
         out[0] = std::to_integer<char>(u8part);
 
         return bcount;
@@ -200,6 +200,7 @@ namespace ae {
         auto const b = static_cast<std::ptrdiff_t>(u8bytes(*u8str));
         return b == 0 ? u8str + 1 : u8str + b;
     }
+
 }
 
 #endif

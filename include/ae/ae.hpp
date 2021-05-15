@@ -29,53 +29,50 @@ namespace ae {
     // from ae/string.h
     using ::uint_to_binstr;
     using ::auint_to_binstr;
-    using ::u8c_to_u32c;
-    using ::u32c_to_u8c;
 
 #ifdef WINCHECK
 
-    class unicode_thing {
+    class win_in_u8 {
     public:
-        unicode_thing(const unicode_thing&) = delete;
-        unicode_thing(unicode_thing&&) = delete;
-        unicode_thing() = default;
+        win_in_u8(const win_in_u8&) = delete;
+        win_in_u8(win_in_u8&&) = delete;
+        win_in_u8() = default;
 
         bool good() const;
 
-        unicode_thing& operator>>(bool& val);
+        win_in_u8& operator>>(bool& val);
 
-        unicode_thing& operator>>(unsigned short& val);
+        win_in_u8& operator>>(unsigned short& val);
 
-        unicode_thing& operator>>(short& val);
+        win_in_u8& operator>>(short& val);
 
-        unicode_thing& operator>>(unsigned int& val);
+        win_in_u8& operator>>(unsigned int& val);
 
-        unicode_thing& operator>>(int& val);
+        win_in_u8& operator>>(int& val);
 
-        unicode_thing& operator>>(unsigned long& val);
+        win_in_u8& operator>>(unsigned long& val);
 
-        unicode_thing& operator>>(long& val);
+        win_in_u8& operator>>(long& val);
 
-        unicode_thing& operator>>(unsigned long long& val);
+        win_in_u8& operator>>(unsigned long long& val);
 
-        unicode_thing& operator>>(long long& val);
+        win_in_u8& operator>>(long long& val);
 
-        unicode_thing& operator>>(float& val);
+        win_in_u8& operator>>(float& val);
 
-        unicode_thing& operator>>(double& val);
+        win_in_u8& operator>>(double& val);
 
-        unicode_thing& operator>>(long double& val);
+        win_in_u8& operator>>(long double& val);
 
-        unicode_thing& operator>>(std::string& val);
+        win_in_u8& operator>>(std::string& val);
+
+        std::string read_line();
     };
 
-    extern unicode_thing u8cin;
-
-    std::string AEAPI read_line();
+    extern win_in_u8 u8cin;
 
 #else
     auto& u8cin = std::cin;
-    using std::getline;
 #endif
 
     [[nodiscard]]
@@ -115,40 +112,6 @@ namespace ae {
             }
         );
     }
-
-    constexpr std::size_t AEAPI u8bytes(const char c) noexcept {
-        std::size_t u8s{};
-        for (auto x = static_cast<unsigned char>(c); x & 0x80Ui8; x <<= 1U) {
-            u8s++;
-        }
-        return u8s;
-    }
-
-    void AEAPI uint_to_binstr(std::string& binstr, std::uint64_t val, std::size_t bits);
-
-    inline void AEAPI uint_to_binstr(std::string& binstr, std::uint8_t const val) {
-        uint_to_binstr(binstr, val, 8);
-    }
-
-    inline void AEAPI uint_to_binstr(std::string& binstr, std::uint16_t const val) {
-        uint_to_binstr(binstr, val, 16);
-    }
-
-    inline void AEAPI uint_to_binstr(std::string& binstr, std::uint32_t const val) {
-        uint_to_binstr(binstr, val, 32);
-    }
-
-    inline void AEAPI uint_to_binstr(std::string& binstr, std::uint64_t const val) {
-        uint_to_binstr(binstr, val, 64);
-    }
-
-    /// <summary>
-    /// Converts a UTF-32 character to UTF-8.
-    /// </summary>
-    /// <param name="code">The UTF-32 character.</param>
-    /// <returns>A 'std::string' holding the UTF-8 character.</returns>
-    [[nodiscard]]
-    std::string AEAPI u32c_to_u8c(char32_t code);
 
 #ifdef WINCHECK
 
