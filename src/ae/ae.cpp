@@ -93,30 +93,6 @@ namespace ae {
 
     win_in_u8 u8cin{};
 
-    std::wstring AEAPI u8str_to_u16str(std::string_view const s) {
-        auto const res = au8s_to_u16s_winapi(s.data());
-        if (res == nullptr) {
-            throw std::bad_alloc{};
-        } else {
-            std::wstring wstr(res);
-            std::free(res);
-            return wstr;
-        }
-    }
-
-    std::string u16str_to_u8str(const std::wstring_view s) {
-        const auto res = au16s_to_u8s_winapi(s.data());
-        if (res == nullptr) {
-            throw std::bad_alloc{};
-        } else {
-            std::string str(res);
-            std::free(res);
-            return std::move(str);
-        }
-    }
-
-#endif // _MSC_VER
-
     unicodization::unicodization(int const argc, char ** & argv) : args(true) {
         auto const k = main_u8ize(&original_mode, &cp, &prev_mode);
         if (!k) {
@@ -143,5 +119,19 @@ namespace ae {
         if (args) {
             free_u8argv(argc, argv);
         }
+    }
+
+#endif
+
+    std::vector<std::string_view> AEAPI cppize(
+        int const argc,
+        char const * const * const argv
+    ) {
+        std::vector<std::string_view> cppargs;
+        cppargs.reserve(static_cast<std::size_t>(argc));
+        for (auto argn = 0; argn < argc; argn++) {
+            cppargs.push_back(argv[argn]);
+        }
+        return std::move(cppargs);
     }
 }

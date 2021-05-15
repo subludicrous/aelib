@@ -45,6 +45,19 @@ void AEAPI free_u8envp(char ** envp);
 
 AE_C_END
 
+#ifdef __cplusplus
+
+#include <string>
+#include <string_view>
+
+[[nodiscard]]
+std::string AEAPI u16_to_u8(std::wstring_view s);
+
+[[nodiscard]]
+std::wstring AEAPI u8_to_u16(std::string_view s);
+
+#endif
+
 #endif
 
 #endif

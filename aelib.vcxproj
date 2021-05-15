@@ -163,7 +163,7 @@
     <ClCompile Include="src\ae\ae.cpp" />
     <ClCompile Include="src\ae\stdio.c" />
     <ClCompile Include="src\ae\string.c" />
-    <ClCompile Include="src\ae\unicode.cpp" />
+    <ClCompile Include="src\ae\win_u8_16.cpp" />
     <ClCompile Include="src\ae\winstr.c" />
     <ClCompile Include="src\ae\win_u8.c" />
   </ItemGroup>

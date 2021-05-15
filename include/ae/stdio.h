@@ -46,4 +46,14 @@ FILE * AEAPI u8fopen(char const * AERESTRICT filename, char const * AERESTRICT m
 
 AE_C_END
 
+#ifdef __cplusplus
+
+namespace ae {
+    using ::u8fopen;
+    using ::press_any_key;
+    using ::wpress_any_key;
+}
+
+#endif
+
 #endif

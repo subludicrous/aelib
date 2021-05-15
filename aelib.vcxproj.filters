@@ -59,7 +59,7 @@
     <ClCompile Include="src\ae\win_u8.c">
       <Filter>Source Files\ae</Filter>
     </ClCompile>
-    <ClCompile Include="src\ae\unicode.cpp">
+    <ClCompile Include="src\ae\win_u8_16.cpp">
       <Filter>Source Files\ae</Filter>
     </ClCompile>
     <ClCompile Include="src\ae\winstr.c">
