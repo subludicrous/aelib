@@ -11,6 +11,7 @@
 #include <ae/base.h>
 #include <stdarg.h>
 #include <stdio.h>
+#include <wctype.h>
 
 AE_C_BEGIN
 
