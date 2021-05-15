@@ -27,53 +27,6 @@ int AEAPI uint_to_binstr(char *binstr, const uint64_t val, const size_t bits) {
 	return 0;
 }
 
-const char* u8str_nextc(const char* str, int len) {
-	for (int i = 0; i < len; ++i) {
-		if (*str == 0) return str;
-		if (*str < 0) {
-			unsigned char c = *str;
-			while ((c <<= 1) & 0x80) ++str;
-		}
-		++str;
-	}
-	return str;
-}
-
-size_t AEAPI u32c_to_u8c(char32_t code, char *utf8str) {
-	/*
-			U+000000  U+00007F    0xxxxxxx
-			U+000080  U+0007FF    110xxxxx  10xxxxxx
-			U+000800  U+00FFFF    1110xxxx  10xxxxxx    10xxxxxx
-			U+010000  U+10FFFF    11110xxx  10xxxxxx    10xxxxxx    10xxxxxx
-	*/
-	// todo optimize
-#pragma warning (disable: 4244)
-	if (code < 0x80) {
-		// ASCII
-		utf8str[0] = (char) code;
-		utf8str[1] = 0x0U;
-		return 1Ui64;
-	} else if (code < 0x800Ui32) {
-		utf8str[0] = 0xC0U | (code >> 6U); //shift 6 to get leftmost bits
-		utf8str[1] = 0x80U | (code & 0x3FU); // select low 6 bits (0x3F = 0b0011_1111)
-		utf8str[2] = 0x0U;
-		return 2Ui64;
-	} else if (code < 0x10000) {
-		utf8str[0] = 0xE0U | (code >> 12U);           /* 1110xxxx */
-		utf8str[1] = 0x80U | ((code >> 6U) & 0x3FU);   /* 10xxxxxx */
-		utf8str[2] = 0x80U | (code & 0x3FU);          /* 10xxxxxx */
-		utf8str[3] = 0x0U;
-		return 3Ui64;
-	} else {
-		utf8str[0] = 0xF0U | (code >> 18U);           /* 11110xxx */
-		utf8str[1] = 0x80U | ((code >> 12U) & 0x3FU);  /* 10xxxxxx */
-		utf8str[2] = 0x80U | ((code >> 6U) & 0x3FU);   /* 10xxxxxx */
-		utf8str[3] = 0x80U | (code & 0x3FU);          /* 10xxxxxx */
-		utf8str[4] = 0x0U;
-		return 4Ui64;
-	}
-}
-
 char * AEAPI auint_to_binstr(const uint64_t input, const size_t bits) {
 	if (bits > 64i64) return NULL;
 
