@@ -1,5 +1,5 @@
 /**
-* ae/win_u8.h
+* ae/win_u8.h impl.
 * Author: subludicrous
 * Licence: see LICENCE.txt
 * Created on: 2021-05-15
@@ -17,20 +17,20 @@
 char ** AEAPI get_u8argv(void) {
 	int argc;
 	// The pointer returned by GetCommandLineW() is managed by the system
-	wchar_t **const wargv = CommandLineToArgvW(GetCommandLineW(), &argc);
+	wchar_t ** const wargv = CommandLineToArgvW(GetCommandLineW(), &argc);
 	if (wargv == NULL)
 	{
 		return false;
 	}
 
 	// make char ** from wchar_t **
-	char **const argv = calloc((1Ui64 + argc), sizeof(char *));
+	char ** const argv = calloc((1Ui64 + argc), sizeof(char *));
 	if (argv == NULL) {
 		return false;
 	}
 	bool failed = false;
 	for (int i = 0; i < argc; i++) {
-		char *const temp = au16str_to_u8str_winapi(wargv[i]);
+		char * const temp = au16s_to_u8s_winapi(wargv[i]);
 		if (temp == NULL) {
 			failed = true;
 			break;
@@ -115,8 +115,9 @@ char ** AEAPI get_u8envp(void)
 
 void AEAPI free_u8envp(char ** envp)
 {
-	char * env;
-	while (env = *envp) {
+	while (true) {
+		char * env = *envp;
+		if (!env) break;
 		free(env);
 		envp++;
 	}

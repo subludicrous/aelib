@@ -17,9 +17,9 @@
 
 AE_C_BEGIN
 
-char * AEAPI au16str_to_u8str_winapi(const wchar_t * utf16str);
+char * AEAPI au16s_to_u8s_winapi(wchar_t const * utf16str);
 
-wchar_t * AEAPI au8str_to_u16str_winapi(const char * utf8str);
+wchar_t * AEAPI au8s_to_u16s_winapi(char const * utf8str);
 
 bool AEAPI main_u8ize(
 	unsigned long * const AERESTRICT poriginal_mode,
