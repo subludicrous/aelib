@@ -39,7 +39,10 @@
     <ClInclude Include="include\winapi_imports.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="prestd.hpp">
+    <ClInclude Include="include\ae\util.hpp">
+      <Filter>Header Files\ae</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ae\winspec.h">
       <Filter>Header Files\ae</Filter>
     </ClInclude>
   </ItemGroup>
@@ -47,10 +50,16 @@
     <ClCompile Include="src\ae\ae.cpp">
       <Filter>Source Files\ae</Filter>
     </ClCompile>
-    <ClCompile Include="src\ae\aestdio.c">
+    <ClCompile Include="src\ae\stdio.c">
       <Filter>Source Files\ae</Filter>
     </ClCompile>
-    <ClCompile Include="src\ae\aestring.c">
+    <ClCompile Include="src\ae\string.c">
+      <Filter>Source Files\ae</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ae\win_u8.c">
+      <Filter>Source Files\ae</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ae\unicode.cpp">
       <Filter>Source Files\ae</Filter>
     </ClCompile>
   </ItemGroup>

@@ -6,9 +6,8 @@
 */
 
 #include <ae/stdio.h>
-#include <ae/string.h>
+#include <ae/winspec.h>
 #include <stdlib.h>
-#include <stdio.h>
 #include <conio.h>
 
 int AEAPI vasprintf(char ** AERESTRICT ptr, char const * const AERESTRICT format, va_list const arg) {

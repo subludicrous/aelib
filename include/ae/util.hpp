@@ -1,12 +1,12 @@
 /**
-* ae/prestd.hpp
+* ae/util.hpp
 * Author: subludicrous
 * Licence: see LICENCE.txt
 * Created on: 2021-05-11
 */
 
-#ifndef AE_PRESTD_HPP
-#define AE_PRESTD_HPP
+#ifndef AE_UTIL_HPP
+#define AE_UTIL_HPP
 
 #include <string_view>
 
@@ -24,6 +24,8 @@ namespace ae {
     constexpr bool starts_with(std::basic_string_view<ch> const sv, std::basic_string_view<ch> const prefix) {
         return sv.substr(0, prefix.size()) == prefix;
     }
+
+
 }
 
 #endif

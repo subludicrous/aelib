@@ -155,13 +155,16 @@
     <ClInclude Include="include\ae\stdio.h" />
     <ClInclude Include="include\ae\string.h" />
     <ClInclude Include="include\ae\unicode.hpp" />
+    <ClInclude Include="include\ae\util.hpp" />
+    <ClInclude Include="include\ae\winspec.h" />
     <ClInclude Include="include\winapi_imports.h" />
-    <ClInclude Include="prestd.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\ae\ae.cpp" />
-    <ClCompile Include="src\ae\aestdio.c" />
-    <ClCompile Include="src\ae\aestring.c" />
+    <ClCompile Include="src\ae\stdio.c" />
+    <ClCompile Include="src\ae\string.c" />
+    <ClCompile Include="src\ae\unicode.cpp" />
+    <ClCompile Include="src\ae\win_u8.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
