@@ -164,6 +164,7 @@
     <ClCompile Include="src\ae\stdio.c" />
     <ClCompile Include="src\ae\string.c" />
     <ClCompile Include="src\ae\unicode.cpp" />
+    <ClCompile Include="src\ae\winstr.c" />
     <ClCompile Include="src\ae\win_u8.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

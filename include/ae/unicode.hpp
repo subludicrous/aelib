@@ -11,6 +11,7 @@
 #include <cstddef>
 #include <string_view>
 #include <string>
+#include <algorithm>
 
 namespace ae {
     [[nodiscard]]
@@ -201,6 +202,21 @@ namespace ae {
         return b == 0 ? u8str + 1 : u8str + b;
     }
 
+    constexpr bool is_ascii(char const c) noexcept {
+        if (static_cast<unsigned char>(c) & 0x80Ui8) {
+            return false;
+        } else return true;
+    }
+
+    constexpr bool is_ascii(std::string_view const s) noexcept {
+        return std::all_of(
+            std::begin(s),
+            std::end(s),
+            [](decltype(s)::value_type const el) {
+                return is_ascii(el);
+            }
+        );
+    }
 }
 
 #endif
