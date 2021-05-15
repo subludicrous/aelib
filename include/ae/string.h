@@ -20,4 +20,13 @@ char * AEAPI auint_to_binstr(uint64_t input, size_t bits);
 
 AE_C_END
 
+#ifdef __cplusplus
+
+namespace ae {
+    using ::uint_to_binstr;
+    using ::auint_to_binstr;
+}
+
+#endif
+
 #endif
