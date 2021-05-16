@@ -48,7 +48,7 @@ char ** AEAPI get_u8argv(void) {
 	return argv;
 }
 
-void AEAPI free_u8argv(int const argc, char **const argv) {
+void AEAPI free_u8argv(int const argc, char ** const argv) {
 	for (int i = 0; i < argc; i++) {
 		free(argv[i]);
 	}
@@ -56,18 +56,20 @@ void AEAPI free_u8argv(int const argc, char **const argv) {
 }
 
 bool AEAPI main_u8ize(
-	unsigned long * const AERESTRICT poriginal_mode,
-	unsigned int * const AERESTRICT pcp,
-	int * const AERESTRICT pprev_mode)
-{
+	unsigned long * AERESTRICT const poriginal_mode,
+	unsigned int * AERESTRICT const pcp,
+	int * AERESTRICT const pprev_mode,
+	void ** AERESTRICT const phandle
+) {
 	// PART 1: GET UTF-8 ARGV
 	// MOVED TO get_u8argv
 	// PART 2: SET OUTPUT
 	// save old codepage
-	const HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
+	HANDLE const hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
 	if (hStdOut == NULL || hStdOut == INVALID_HANDLE_VALUE) {
 		return false;
 	}
+	*phandle = hStdOut;
 
 	DWORD mode = 0;
 	if (!GetConsoleMode(hStdOut, &mode)) {
@@ -77,6 +79,7 @@ bool AEAPI main_u8ize(
 	*poriginal_mode = mode;
 	mode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING;
 	if (!SetConsoleMode(hStdOut, mode)) {
+		return false;
 	}
 
 	*pcp = GetConsoleOutputCP();
@@ -95,13 +98,13 @@ bool AEAPI main_u8ize(
 void AEAPI main_deu8ize(
 	unsigned long const original_mode,
 	unsigned int const cp,
-	int const prev_mode
+	int const prev_mode,
+	void * const handle
 ) {
 	// PART 1: FREE UTF-8 ARGV
 	// moved
 	// PART 2: RESET OUTPUT
-	const HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
-	SetConsoleMode(hStdOut, original_mode);
+	SetConsoleMode(handle, original_mode);
 	SetConsoleOutputCP(cp);
 	// PART 3: RESET OUTPUT
 	(void) _setmode(_fileno(stdin), prev_mode);
@@ -115,12 +118,14 @@ char ** AEAPI get_u8envp(void)
 
 void AEAPI free_u8envp(char ** envp)
 {
+	char * const * envp2 = envp;
 	while (true) {
-		char * env = *envp;
+		char * const env = *envp;
 		if (!env) break;
 		free(env);
-		envp++;
+		envp2++;
 	}
+	free(envp);
 }
 
 #endif

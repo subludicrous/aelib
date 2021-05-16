@@ -24,13 +24,15 @@ wchar_t * AEAPI au8s_to_u16s_winapi(char const * utf8str);
 bool AEAPI main_u8ize(
 	unsigned long * const AERESTRICT poriginal_mode,
 	unsigned int * AERESTRICT pcp,
-	int * AERESTRICT pprev_mode
+	int * AERESTRICT pprev_mode,
+	void ** AERESTRICT phandle
 );
 
 void AEAPI main_deu8ize(
 	unsigned long original_mode,
 	unsigned int cp,
-	int prev_mode
+	int prev_mode,
+	void * handle
 );
 
 char ** AEAPI get_u8argv(void);
@@ -50,11 +52,13 @@ AE_C_END
 #include <string>
 #include <string_view>
 
-[[nodiscard]]
-std::string AEAPI u16_to_u8(std::wstring_view s);
+namespace ae {
+	[[nodiscard]]
+	std::string AEAPI u16_to_u8(std::wstring_view s);
 
-[[nodiscard]]
-std::wstring AEAPI u8_to_u16(std::string_view s);
+	[[nodiscard]]
+	std::wstring AEAPI u8_to_u16(std::string_view s);
+}
 
 #endif
 
