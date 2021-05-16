@@ -1,9 +1,5 @@
-/**
-* ae/unicode.hpp
-* Author: subludicrous
-* Licence: see LICENCE.txt
-* Created on: 2021-05-06
-*/
+// © Nikola Stepanoski
+// SPDX-License-Identifier: BSL-1.0
 
 #ifndef AE_UNICODE_HPP
 #define AE_UNICODE_HPP

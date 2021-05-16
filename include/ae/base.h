@@ -1,9 +1,5 @@
-/**
-* ae/base.h
-* Author: subludicrous
-* Licence: see LICENCE.txt
-* Created on: 2021-02-02
-*/
+// © Nikola Stepanoski
+// SPDX-License-Identifier: BSL-1.0
 
 #ifndef AE_BASE_H
 #define AE_BASE_H
@@ -18,6 +14,8 @@
 #ifdef __cplusplus
     #define AE_C_BEGIN extern "C" {
     #define AE_C_END }
+    
+    // always use at least C++17
     #if __cplusplus > 201703L
         #define AECONSTEXPR20 constexpr
     #else

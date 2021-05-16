@@ -1,9 +1,5 @@
-/**
-* ae/stdio.h
-* Author: subludicrous
-* Licence: see LICENCE.txt
-* Created on: 2021-02-02
-*/
+// © Nikola Stepanoski
+// SPDX-License-Identifier: BSL-1.0
 
 #ifndef AE_STDIO_H
 #define AE_STDIO_H

@@ -1,9 +1,5 @@
-/**
-* ae/win_u8.h impl.
-* Author: subludicrous
-* Licence: see LICENCE.txt
-* Created on: 2021-05-15
-*/
+// © Nikola Stepanoski
+// SPDX-License-Identifier: BSL-1.0
 
 #include <ae/winspec.h>
 #include <winapi_imports.h>

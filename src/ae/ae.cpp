@@ -1,10 +1,5 @@
-/**
-* Name: aelib.cpp
-* Description: The implementation for 'aelib.hpp'.
-* Created on: 2020-12-09
-* © 2020, 2021 subludicrous
-* Licensed under the terms of the MIT licence.
-*/
+// © Nikola Stepanoski
+// SPDX-License-Identifier: BSL-1.0
 
 #include <ae/ae.hpp>
 #include <ae/winspec.h>

@@ -1,10 +1,5 @@
-/**
-* Name: aestring.h
-* Description: A Unicode® (among other things) string library.
-* Created on: 2021-02-02
-* © 2021 subludicrous
-* Licensed under the terms of the MIT licence.
-*/
+// � Nikola Stepanoski
+// SPDX-License-Identifier: BSL-1.0
 
 #ifndef AE_STRING_H
 #define AE_STRING_H
@@ -21,6 +16,8 @@ char * AEAPI auint_to_binstr(uint64_t input, size_t bits);
 AE_C_END
 
 #ifdef __cplusplus
+
+#include <cstdint>
 
 namespace ae {
     using ::uint_to_binstr;

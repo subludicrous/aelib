@@ -1,15 +1,13 @@
-/**
-* ae/util.hpp
-* Author: subludicrous
-* Licence: see LICENCE.txt
-* Created on: 2021-05-11
-*/
+// © Nikola Stepanoski
+// SPDX-License-Identifier: BSL-1.0
 
 #ifndef AE_UTIL_HPP
 #define AE_UTIL_HPP
 
-#include <string_view>
 #include <ae/string.h>
+#include <string_view>
+#include <cstdio>
+#include <cstdint>
 
 namespace ae {
     // replace with std's in C++23

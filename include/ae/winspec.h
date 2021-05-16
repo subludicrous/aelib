@@ -1,9 +1,5 @@
-/**
-* ae/winspec.h
-* Author: subludicrous
-* Licence: see LICENCE.txt
-* Created on: 2021-05-15
-*/
+// © Nikola Stepanoski
+// SPDX-License-Identifier: BSL-1.0
 
 #ifndef AE_WINSPEC_H
 #define AE_WINSPEC_H

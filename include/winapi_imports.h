@@ -1,10 +1,5 @@
-/**
-* Name: winapi_imports.h
-* Description: Header that allows avoiding to include Windows.h
-* Created on: 2020-12-16
-* © 2020, 2021 subludicrous
-* Licensed under the terms of the MIT licence.
-*/
+// © Nikola Stepanoski
+// SPDX-License-Identifier: BSL-1.0
 
 #ifndef WINAPI_IMPORTS_H
 #define WINAPI_IMPORTS_H
@@ -70,9 +65,15 @@ __declspec(dllimport) int          WINAPI WideCharToMultiByte(
 
 __declspec(dllimport) HANDLE       WINAPI GetStdHandle(DWORD nStdHandle);
 
-__declspec(dllimport) BOOL         WINAPI GetConsoleMode(HANDLE hConsoleHandle, LPDWORD lpMode);
+__declspec(dllimport) BOOL         WINAPI GetConsoleMode(
+    HANDLE hConsoleHandle,
+    LPDWORD lpMode
+);
 
-__declspec(dllimport) BOOL         WINAPI SetConsoleMode(HANDLE hConsoleHandle, DWORD dwMode);
+__declspec(dllimport) BOOL         WINAPI SetConsoleMode(
+    HANDLE hConsoleHandle,
+    DWORD dwMode
+);
 
 __declspec(dllimport) UINT         WINAPI GetConsoleOutputCP(void);
 
@@ -82,7 +83,10 @@ __declspec(dllimport) HLOCAL       WINAPI LocalFree(HLOCAL hMem);
 
 __declspec(dllimport) LPWSTR       WINAPI GetCommandLineW(void);
 
-__declspec(dllimport) LPWSTR *     WINAPI CommandLineToArgvW(LPCWSTR lpCmdLine, int * pNumArgs);
+__declspec(dllimport) LPWSTR *     WINAPI CommandLineToArgvW(
+    LPCWSTR lpCmdLine,
+    int * pNumArgs
+);
 
 AE_C_END
 

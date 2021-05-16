@@ -1,15 +1,10 @@
-/**
-* ae/ae.hpp
-* Author: subludicrous
-* Licence: see LICENCE.txt
-* Created on: 2021-12-16
-*/
+// © Nikola Stepanoski
+// SPDX-License-Identifier: BSL-1.0
 
 #ifndef AE_LIB_HPP
 #define AE_LIB_HPP
 
-#include <ae/stdio.h>
-#include <ae/string.h>
+#include <ae/base.h>
 #include <iostream>
 #include <vector>
 #include <string_view>
@@ -87,4 +82,4 @@ namespace ae {
     std::vector<std::string_view> AEAPI cppize(int argc, char const * const * argv);
 }
 
-#endif // !AE_LIB_HPP
+#endif

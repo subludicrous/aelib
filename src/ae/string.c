@@ -1,9 +1,5 @@
-/**
-* Name: ae/string.h impl.
-* Author: subludicrous
-* Licence: see LICENCE.txt
-* Created on: 2021-02-02
-*/
+// © Nikola Stepanoski
+// SPDX-License-Identifier: BSL-1.0
 
 #include <ae/string.h>
 #include <errno.h>
