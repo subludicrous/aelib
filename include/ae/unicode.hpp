@@ -11,6 +11,8 @@
 #include <algorithm>
 
 namespace ae {
+    static constexpr std::string_view replacement = u8"\uFFFD";
+
     [[nodiscard]]
     constexpr auto u8bytes(char const c) noexcept {
         unsigned int u8s{};
