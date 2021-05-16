@@ -85,11 +85,11 @@ wint_t AEAPI wpress_any_key(void) {
 
 FILE * AEAPI u8fopen(char const * const AERESTRICT filename, char const * const AERESTRICT mode) {
 #ifdef WINCHECK
-	wchar_t * const wfilename = au8str_to_u16str_winapi(filename);
+	wchar_t * const wfilename = au8s_to_u16s_winapi(filename);
 	if (wfilename == NULL) {
 		return NULL;
 	}
-	wchar_t * const wmode = au8str_to_u16str_winapi(mode);
+	wchar_t * const wmode = au8s_to_u16s_winapi(mode);
 	if (wmode == NULL) {
 		free(wfilename);
 		return NULL;
