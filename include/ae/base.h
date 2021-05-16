@@ -27,6 +27,12 @@
 #define AE_C_BEGIN extern "C" {
 #define AE_C_END }
 
+#if __cplusplus > 201703L
+#define AECONSTEXPR20 constexpr
+#else
+#define AECONSTEXPR20 inline
+#endif
+
 #else
 
 #define AE_C_BEGIN

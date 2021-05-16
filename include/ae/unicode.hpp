@@ -8,6 +8,7 @@
 #ifndef AE_UNICODE_HPP
 #define AE_UNICODE_HPP
 
+#include <ae/base.h>
 #include <cstddef>
 #include <string_view>
 #include <string>
@@ -18,14 +19,14 @@ namespace ae {
     constexpr auto u8bytes(char const c) noexcept {
         unsigned int u8s{};
         for (auto x = static_cast<unsigned char>(c); x & 0x80Ui8; x <<= 1U) {
-            u8s++;
+            ++u8s;
         }
         return u8s;
     }
 
     // assumes legit UTF-8
     [[nodiscard]]
-    constexpr std::size_t u8len(std::string_view const str) noexcept {
+    constexpr auto u8len(std::string_view const str) noexcept {
         std::size_t sz{};
         for (auto it = std::cbegin(str); it != std::cend(str); ) {
             auto b = u8bytes(*it);
@@ -38,7 +39,7 @@ namespace ae {
 
     // assumes legit UTF-8
     [[nodiscard]]
-    constexpr char32_t u8_to_u32(char const * const u8str) noexcept {
+    constexpr auto u8_to_u32(char const * const u8str) noexcept {
         constexpr std::byte cont_mask{ 0x80U };
         //std::byte const first{ *u8str };
         auto const first = static_cast<std::byte>(*u8str);
@@ -46,14 +47,7 @@ namespace ae {
             // i.e. is ASCII
             return std::to_integer<char32_t>(first);
         }
-        unsigned int cont_byte_count{};
-        {
-            // count continuation bytes
-            auto copy_first = first;
-            while (std::to_integer<bool>((copy_first <<= 1U) & cont_mask)) {
-                ++cont_byte_count;
-            }
-        }
+        auto const cont_byte_count = u8bytes(std::to_integer<char>(first)) - 1U;
         // move the 6 x's of cont. bs 10XX'XXXX into result
         char32_t result{};
         // going from last to first
@@ -76,7 +70,7 @@ namespace ae {
 
     // assumes legit UTF-32
     [[nodiscard]]
-    constexpr auto req_bytes_u8(char32_t const codepoint) noexcept {
+    constexpr auto req_bytes_u8(char32_t const codepoint) noexcept -> std::size_t {
         if (codepoint <= 0x7FUi32) {
             return 1U;
         }
@@ -90,7 +84,7 @@ namespace ae {
     }
 
     [[nodiscard]]
-    constexpr bool validate_u8_helper(char const * const cp, std::size_t const byte_count) noexcept {
+    constexpr auto validate_u8_helper(char const * const cp, std::size_t const byte_count) noexcept {
         // overlong encodings
         // a sequence that decodes to an invalid code point
         // i.e. U+D800 through U+DFFF and seqs after U+10FFFF
@@ -105,7 +99,7 @@ namespace ae {
 
     // using u8"" can be weird on windows
     [[nodiscard]]
-    constexpr bool validate_u8(std::string_view const str) noexcept {
+    constexpr auto validate_u8(std::string_view const str) noexcept {
         // We have to check: 
         // an unexpected continuation byte
         // a non-continuation byte before the end of the character
@@ -155,7 +149,7 @@ namespace ae {
 
     // assumes legit UTF-32, writes null
     // @return required size w/o '\0'
-    constexpr std::size_t u32_to_u8(
+    constexpr auto u32_to_u8(
         char32_t codepoint,
         char * const out
     ) noexcept {
@@ -202,13 +196,15 @@ namespace ae {
         return b == 0 ? u8str + 1 : u8str + b;
     }
 
-    constexpr bool is_ascii(char const c) noexcept {
+    [[nodiscard]]
+    constexpr auto is_ascii(char const c) noexcept {
         if (static_cast<unsigned char>(c) & 0x80Ui8) {
             return false;
         } else return true;
     }
 
-    constexpr bool is_ascii(std::string_view const s) noexcept {
+    [[nodiscard]]
+    AECONSTEXPR20 auto is_ascii(std::string_view const s) noexcept {
         return std::all_of(
             std::begin(s),
             std::end(s),
