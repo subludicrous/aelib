@@ -14,17 +14,17 @@
 
 #ifdef WINCHECK
 
-char ** AEAPI get_u8argv(void) {
+char * * AEAPI get_u8argv(void) {
 	int argc;
 	// The pointer returned by GetCommandLineW() is managed by the system
-	wchar_t ** const wargv = CommandLineToArgvW(GetCommandLineW(), &argc);
+	wchar_t * * const wargv = CommandLineToArgvW(GetCommandLineW(), &argc);
 	if (wargv == NULL)
 	{
 		return false;
 	}
 
-	// make char ** from wchar_t **
-	char ** const argv = calloc((1Ui64 + argc), sizeof(char *));
+	// make char * * from wchar_t * *
+	char * * const argv = calloc((1Ui64 + argc), sizeof(char *));
 	if (argv == NULL) {
 		return false;
 	}
@@ -48,7 +48,7 @@ char ** AEAPI get_u8argv(void) {
 	return argv;
 }
 
-void AEAPI free_u8argv(int const argc, char ** const argv) {
+void AEAPI free_u8argv(int const argc, char * * const argv) {
 	for (int i = 0; i < argc; i++) {
 		free(argv[i]);
 	}
@@ -56,10 +56,10 @@ void AEAPI free_u8argv(int const argc, char ** const argv) {
 }
 
 bool AEAPI main_u8ize(
-	unsigned long * AERESTRICT const poriginal_mode,
-	unsigned int * AERESTRICT const pcp,
-	int * AERESTRICT const pprev_mode,
-	void ** AERESTRICT const phandle
+	unsigned long * const AERESTRICT poriginal_mode,
+	unsigned int * const AERESTRICT pcp,
+	int * const AERESTRICT pprev_mode,
+	void ** const AERESTRICT phandle
 ) {
 	// PART 1: GET UTF-8 ARGV
 	// MOVED TO get_u8argv
@@ -111,13 +111,11 @@ void AEAPI main_deu8ize(
 }
 
 //todo
-char ** AEAPI get_u8envp(void)
-{
+char ** AEAPI get_u8envp(void) {
 	return NULL;
 }
 
-void AEAPI free_u8envp(char ** envp)
-{
+void AEAPI free_u8envp(char ** envp) {
 	char * const * envp2 = envp;
 	while (true) {
 		char * const env = *envp;

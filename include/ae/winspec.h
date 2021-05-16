@@ -22,10 +22,10 @@ char * AEAPI au16s_to_u8s_winapi(wchar_t const * utf16str);
 wchar_t * AEAPI au8s_to_u16s_winapi(char const * utf8str);
 
 bool AEAPI main_u8ize(
-	unsigned long * const AERESTRICT poriginal_mode,
+	unsigned long * AERESTRICT poriginal_mode,
 	unsigned int * AERESTRICT pcp,
 	int * AERESTRICT pprev_mode,
-	void ** AERESTRICT phandle
+	void * * AERESTRICT phandle
 );
 
 void AEAPI main_deu8ize(
@@ -35,15 +35,15 @@ void AEAPI main_deu8ize(
 	void * handle
 );
 
-char ** AEAPI get_u8argv(void);
+char * * AEAPI get_u8argv(void);
 
-void AEAPI free_u8argv(int argc, char ** argv);
+void AEAPI free_u8argv(int argc, char * * argv);
 
 // todo also u8set, get etc
 
-char ** AEAPI get_u8envp(void);
+char * * AEAPI get_u8envp(void);
 
-void AEAPI free_u8envp(char ** envp);
+void AEAPI free_u8envp(char * * envp);
 
 AE_C_END
 
