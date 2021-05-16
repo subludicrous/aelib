@@ -3,7 +3,6 @@
 
 #include <ae/ae.hpp>
 #include <ae/winspec.h>
-#include <stdexcept>
 #include <cwchar>
 
 namespace ae {
