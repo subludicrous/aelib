@@ -81,20 +81,20 @@ namespace ae {
     win_in_u8& win_in_u8::operator>>(std::string& val) {
         std::wstring wval;
         std::wcin >> wval;
-        val = u16str_to_u8str(wval);
+        val = u16_to_u8(wval);
         return *this;
     }
 
     std::string win_in_u8::read_line() {
         std::wstring wstr;
         std::getline(std::wcin, wstr);
-        return u16str_to_u8str(wstr);
+        return u16_to_u8(wstr);
     }
 
     win_in_u8 u8cin{};
 
     unicodization::unicodization(int const argc, char ** & argv) : args(true) {
-        auto const k = main_u8ize(&original_mode, &cp, &prev_mode);
+        auto const k = main_u8ize(&original_mode, &cp, &prev_mode, &handle);
         if (!k) {
             throw std::runtime_error("'main_u8ize' failed.");
         }
@@ -108,14 +108,14 @@ namespace ae {
     }
 
     unicodization::unicodization() : args(false), argc(0), argv(nullptr) {
-        auto const k = main_u8ize(&original_mode, &cp, &prev_mode);
+        auto const k = main_u8ize(&original_mode, &cp, &prev_mode, &handle);
         if (!k) {
             throw std::runtime_error("'main_u8ize' failed.");
         }
     }
 
     unicodization::~unicodization() {
-        main_deu8ize(original_mode, cp, prev_mode);
+        main_deu8ize(original_mode, cp, prev_mode, handle);
         if (args) {
             free_u8argv(argc, argv);
         }

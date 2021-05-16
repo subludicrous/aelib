@@ -16,7 +16,7 @@
 
 using namespace std::string_view_literals;
 
-namespace ae {    
+namespace ae {
 
 #ifdef WINCHECK
 
@@ -70,6 +70,7 @@ namespace ae {
         bool const args;
         int argc;
         char ** argv;
+        void * handle;
         unsigned long original_mode;
         unsigned int cp;
         int prev_mode;
