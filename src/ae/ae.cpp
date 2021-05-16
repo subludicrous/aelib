@@ -88,32 +88,41 @@ namespace ae {
 
     win_in_u8 u8cin{};
 
-    unicodization::unicodization(int const argc, char ** & argv) : args(true) {
-        auto const k = main_u8ize(&original_mode, &cp, &prev_mode, &handle);
-        if (!k) {
-            throw std::runtime_error("'main_u8ize' failed.");
+#ifdef _MSC_VER
+    // uninit'd vals wouldn't be used
+#pragma warning(suppress: 26495)
+#endif
+    unicodization::unicodization(int const argc, char ** & argv) {
+        aight = main_u8ize(&original_mode, &cp, &prev_mode, &handle);
+        if (!aight) {
+            return;
         }
         auto const u8argv = get_u8argv();
         if (u8argv == nullptr) {
-            throw std::runtime_error("'get_u8argv' failed.");
+            aight = false;
+            main_deu8ize(original_mode, cp, prev_mode, handle);
+            return;
         }
         argv = u8argv;
         this->argc = argc;
         this->argv = u8argv;
     }
 
-    unicodization::unicodization() : args(false), argc(0), argv(nullptr) {
-        auto const k = main_u8ize(&original_mode, &cp, &prev_mode, &handle);
-        if (!k) {
-            throw std::runtime_error("'main_u8ize' failed.");
-        }
+    unicodization::unicodization() : argc(0), argv(nullptr) {
+        aight = main_u8ize(&original_mode, &cp, &prev_mode, &handle);
     }
 
     unicodization::~unicodization() {
-        main_deu8ize(original_mode, cp, prev_mode, handle);
-        if (args) {
-            free_u8argv(argc, argv);
+        if (aight) {
+            main_deu8ize(original_mode, cp, prev_mode, handle);
+            if (argc) {
+                free_u8argv(argc, argv);
+            }
         }
+    }
+
+    unicodization::operator bool() const noexcept {
+        return aight;
     }
 
 #endif

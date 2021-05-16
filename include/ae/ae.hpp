@@ -62,7 +62,7 @@ namespace ae {
 
     class unicodization final {
     private:
-        bool const args;
+        bool aight;
         int argc;
         char ** argv;
         void * handle;
@@ -75,6 +75,7 @@ namespace ae {
         unicodization();
         unicodization(int argc, char**& argv);
         ~unicodization();
+        operator bool() const noexcept;
     };
 
 #endif
