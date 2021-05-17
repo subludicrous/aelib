@@ -21,16 +21,18 @@
     #else
         #define AECONSTEXPR20 inline
     #endif
-    #define AERESTRICT
+
+    #ifdef _MSC_VER
+        #define AERESTRICT __restrict
+    #else
+        #define AERESTRICT
+    #endif
 
 #else
     #define AE_C_BEGIN
     #define AE_C_END
-    #ifdef WINCHECK
-        #define AERESTRICT __restrict
-    #else
-        #define AERESTRICT restrict
-    #endif
+
+    #define AERESTRICT restrict
 
 #endif
     #define AEAPI __cdecl
