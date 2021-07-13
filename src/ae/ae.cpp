@@ -135,6 +135,6 @@ namespace ae {
         for (auto argn = 0; argn < argc; argn++) {
             cppargs.push_back(argv[argn]);
         }
-        return std::move(cppargs);
+        return cppargs;
     }
 }
