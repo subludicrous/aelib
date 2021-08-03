@@ -1,10 +1,11 @@
-// © Nikola Stepanoski
+// © subludicrous
 // SPDX-License-Identifier: BSL-1.0
 
-#include <ae/winspec.h>
+#include <cstdlib>
+#include <ae/win_u8.h>
 
 namespace ae {
-    std::wstring AEAPI u8_to_u16(std::string_view const s) {
+    std::wstring AE_API u8_to_u16(std::string_view const s) {
         auto const res = au8s_to_u16s_winapi(s.data());
         if (res == nullptr) {
             throw std::bad_alloc{};
@@ -15,7 +16,7 @@ namespace ae {
         }
     }
 
-    std::string AEAPI u16_to_u8(std::wstring_view const s) {
+    std::string AE_API u16_to_u8(std::wstring_view const s) {
         auto const res = au16s_to_u8s_winapi(s.data());
         if (res == nullptr) {
             throw std::bad_alloc{};
