@@ -1,25 +1,33 @@
-// © Nikola Stepanoski
+// © subludicrous
 // SPDX-License-Identifier: BSL-1.0
 
 #ifndef AE_UNICODE_HPP
 #define AE_UNICODE_HPP
 
 #include <ae/base.h>
-#include <cstddef>
+#include <ae/byte.hpp>
 #include <string_view>
 #include <string>
 #include <algorithm>
 
+using namespace std::string_view_literals;
+
 namespace ae {
-    static constexpr std::string_view replacement = u8"\uFFFD";
+    static constexpr auto replacement = "\xef\xbf\xbd"sv;
 
     [[nodiscard]]
     constexpr auto u8bytes(char const c) noexcept {
         unsigned int u8s{};
-        for (auto x = static_cast<unsigned char>(c); x & 0x80Ui8; x <<= 1U) {
+        auto const scheck = static_cast<unsigned char>(c);
+        for (unsigned int x = scheck; x & 0x80u; x <<= 1u) {
             ++u8s;
         }
         return u8s;
+    }
+
+    [[nodiscard]]
+    constexpr auto u8bytes(byte const b) {
+        return u8bytes(std::to_integer<char>(b));
     }
 
     // assumes legit UTF-8
@@ -37,58 +45,61 @@ namespace ae {
 
     // assumes legit UTF-8
     [[nodiscard]]
-    constexpr auto u8_to_u32(char const * const u8str) noexcept {
-        constexpr std::byte cont_mask{ 0x80U };
-        //std::byte const first{ *u8str };
-        auto const first = static_cast<std::byte>(*u8str);
-        if (!std::to_integer<bool>(first & cont_mask)) {
+    constexpr char32_t u8_to_u32(char const * const u8str) noexcept {
+        constexpr auto cont_mask = 0x80_b;
+        auto const first = to_byte(*u8str);
+        if (!to_int(first & cont_mask)) {
             // i.e. is ASCII
-            return std::to_integer<char32_t>(first);
+            return to_int(first);
         }
-        auto const cont_byte_count = u8bytes(std::to_integer<char>(first)) - 1U;
+        auto const cont_byte_count = u8bytes(first) - 1u;
         // move the 6 x's of cont. bs 10XX'XXXX into result
         char32_t result{};
         // going from last to first
-        for (auto i = cont_byte_count; i > 0U; --i) {
+        for (auto i = cont_byte_count; i > 0u; --i) {
             // get byte
-            auto cb = static_cast<std::byte>(*(u8str + i));
-            //std::byte cb{ *(u8str + i) };
+            auto cb = to_byte(*(u8str + i));
             // remove cont. mask
             cb &= ~cont_mask;
             // make a part of the codepoint
-            auto part = std::to_integer<char32_t>(cb);
+            char32_t part = to_int(cb);
             // shift these bits to the right place
             part <<= (6 * (cont_byte_count - i));
             result |= part;
         }
-        auto const first_byte_mask = std::byte{ 0xFFU } >> (cont_byte_count + 1); // + 1 for 1st byte
-        result |= std::to_integer<char32_t>(first & first_byte_mask) << (6 * cont_byte_count);
+        // + 1 for 1st byte
+        auto const first_byte_mask = 0xFF_b >> (cont_byte_count + 1);
+        auto const fb_shift = (6 * cont_byte_count);
+        result |= to_int(first & first_byte_mask) << fb_shift;
         return result;
     }
 
     // assumes legit UTF-32
     [[nodiscard]]
-    constexpr auto req_bytes_u8(char32_t const codepoint) noexcept -> std::size_t {
-        if (codepoint <= 0x7FUi32) {
-            return 1U;
+    constexpr std::size_t req_bytes_u8(char32_t const codepoint) noexcept {
+        if (codepoint <= 0x7Fu) {
+            return 1u;
         }
-        if (codepoint <= 0x7FFUi32) {
-            return 2U;
+        if (codepoint <= 0x7FFu) {
+            return 2u;
         }
-        if (codepoint <= 0xFFFFUi32) {
-            return 3U;
+        if (codepoint <= 0xFFFFu) {
+            return 3u;
         }
-        return 4U;
+        return 4u;
     }
 
     [[nodiscard]]
-    constexpr auto validate_u8_helper(char const * const cp, std::size_t const byte_count) noexcept {
+    constexpr bool validate_u8_helper(
+        char const * const cp,
+        std::size_t const byte_count
+    ) noexcept {
         // overlong encodings
         // a sequence that decodes to an invalid code point
         // i.e. U+D800 through U+DFFF and seqs after U+10FFFF
         auto const codepoint = u8_to_u32(cp);
-        if (codepoint > 0x10FFFFUi32 ||
-            codepoint >= 0xD800Ui32 && codepoint <= 0xDFFFUi32) {
+        if (codepoint > 0x10FFFFu ||
+            codepoint >= 0xD800u && codepoint <= 0xDFFFu) {
             return false;
         }
         auto const req_u8size = req_bytes_u8(codepoint);
@@ -97,23 +108,23 @@ namespace ae {
 
     // using u8"" can be weird on windows
     [[nodiscard]]
-    constexpr auto validate_u8(std::string_view const str) noexcept {
+    constexpr bool validate_u8(std::string_view const str) noexcept {
         // We have to check: 
         // an unexpected continuation byte
         // a non-continuation byte before the end of the character
 
-        constexpr auto max_bytes{ 4U };
+        constexpr auto max_bytes{ 4u };
         for (std::size_t pos{}; ; ) {
             if (pos == str.size()) {
                 break;
             }
             auto const b = u8bytes(str[pos]);
-            if (b == 0) {
+            if (b == 0u) {
                 // ASCII byte
                 ++pos;
                 continue;
             }
-            if (b == 1) {
+            if (b == 1u) {
                 // lone continuation byte
                 return false;
             }
@@ -130,14 +141,17 @@ namespace ae {
             }
             while (pos < codepoint_end) {
                 ++pos;
-                if (!(static_cast<unsigned char>(str[pos]) & 0x80U)) {
+                if (!to_int(to_byte(str[pos]) & 0x80_b)) {
                     // not cont. b
                     return false;
                 }
             }
             // passed checks for invalid bytes
             // now we check for overlong seqs and invalid codepoints
-            if (!validate_u8_helper(str.data() + codepoint_beg, codepoint_end + 1 - codepoint_beg)) {
+            if (!validate_u8_helper(
+                str.data() + codepoint_beg,
+                codepoint_end + 1 - codepoint_beg
+            )) {
                 return false;
             }
             ++pos;
@@ -147,7 +161,7 @@ namespace ae {
 
     // assumes legit UTF-32, writes null
     // @return required size w/o '\0'
-    constexpr auto u32_to_u8(
+    constexpr std::size_t u32_to_u8(
         char32_t codepoint,
         char * const out
     ) noexcept {
@@ -156,31 +170,31 @@ namespace ae {
         if (out == nullptr) {
             return bcount;
         }
-        constexpr std::byte contb{ 0x80U };
+        constexpr auto contb = 0x80_b;
 
         // null terminator
         out[bcount] = '\0';
 
         if (bcount == 1U) {
-            out[0U] = static_cast<char>(codepoint);
+            out[0] = static_cast<char>(codepoint);
             return bcount;
         }
 
         // from end backwards
-        constexpr auto shift = 6U;
-        std::byte u8part{};
-        for (auto bc2 = bcount - 1U; bc2 >= 1; bc2--) {
-            constexpr std::byte cont_part{ 0x3FU };
-            u8part = std::byte(codepoint);
+        constexpr auto shift = 6u;
+        byte u8part{};
+        for (auto bc2 = bcount - 1u; bc2 >= 1; bc2--) {
+            constexpr auto cont_part = 0x3F_b;
+            u8part = to_byte(codepoint);
             codepoint >>= shift;
             u8part &= cont_part; // xx11 1111
             u8part |= contb; // 10xx xxxx
             out[bc2] = std::to_integer<char>(u8part);
         }
         // first
-        constexpr std::byte bm0{ 0xF0U };
-        std::byte const bmask = bm0 << (4U - bcount);
-        u8part = std::byte(codepoint);
+        constexpr auto bm0 = 0xF0_b;
+        auto const bmask = bm0 << (4u - bcount);
+        u8part = to_byte(codepoint);
         u8part |= bmask; // add bytes' count mask
         out[0] = std::to_integer<char>(u8part);
 
@@ -196,7 +210,7 @@ namespace ae {
 
     [[nodiscard]]
     constexpr auto is_ascii(char const c) noexcept {
-        if (static_cast<unsigned char>(c) & 0x80Ui8) {
+        if (static_cast<unsigned char>(c) & 0x80u) {
             return false;
         } else return true;
     }

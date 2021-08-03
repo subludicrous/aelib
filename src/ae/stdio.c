@@ -1,12 +1,16 @@
-// © Nikola Stepanoski
+// © subludicrous
 // SPDX-License-Identifier: BSL-1.0
 
 #include <ae/stdio.h>
-#include <ae/winspec.h>
+#include <ae/win_u8.h>
 #include <stdlib.h>
 #include <conio.h>
 
-int AEAPI vasprintf(char ** AERESTRICT ptr, char const * const AERESTRICT format, va_list const arg) {
+int AE_API vasprintf(
+	char ** AE_RESTRICT ptr,
+	char const * const AE_RESTRICT format,
+	va_list const arg
+) {
 	va_list copy;
 	va_copy(copy, arg);
 	// _vscprintf tells you how big the buffer needs to be
@@ -29,7 +33,11 @@ int AEAPI vasprintf(char ** AERESTRICT ptr, char const * const AERESTRICT format
 	return err;
 }
 
-int AEAPI asprintf(char ** const AERESTRICT ptr, char const * const AERESTRICT format, ...) {
+int AE_API asprintf(
+	char ** const AE_RESTRICT ptr,
+	char const * const AE_RESTRICT format,
+	...
+) {
 	va_list ap;
 	va_start(ap, format);
 	int const r = vasprintf(ptr, format, ap);
@@ -37,7 +45,11 @@ int AEAPI asprintf(char ** const AERESTRICT ptr, char const * const AERESTRICT f
 	return r;
 }
 
-int AEAPI vaswprintf(wchar_t ** const AERESTRICT ptr, wchar_t const * const AERESTRICT format, va_list const arg) {
+int AE_API vaswprintf(
+	wchar_t ** const AE_RESTRICT ptr,
+	wchar_t const * const AE_RESTRICT format,
+	va_list const arg
+) {
 	va_list copy;
 	va_copy(copy, arg);
 	int const len = _vscwprintf(format, copy);
@@ -59,7 +71,11 @@ int AEAPI vaswprintf(wchar_t ** const AERESTRICT ptr, wchar_t const * const AERE
 	return err;
 }
 
-int AEAPI aswprintf(wchar_t ** const AERESTRICT ptr, wchar_t const * const AERESTRICT format, ...) {
+int AE_API aswprintf(
+	wchar_t ** const AE_RESTRICT ptr,
+	wchar_t const * const AE_RESTRICT format,
+	...
+) {
 	va_list ap;
 	va_start(ap, format);
 	int const r = vaswprintf(ptr, format, ap);
@@ -67,20 +83,17 @@ int AEAPI aswprintf(wchar_t ** const AERESTRICT ptr, wchar_t const * const AERES
 	return r;
 }
 
-int AEAPI press_any_key(void) {
+int AE_API press_any_key(void) {
 	puts("Press any key to continue . . .");
 	// the fastest way to do this 0% CPU vs 10+% with other
 	return _getch();
 }
 
-wint_t AEAPI wpress_any_key(void) {
-	_putws(L"Press any key to continue . . .");
-	// the fastest way to do this 0% CPU vs 10+% with other
-	return _getwch();
-}
-
-FILE * AEAPI u8fopen(char const * const AERESTRICT filename, char const * const AERESTRICT mode) {
-#ifdef WINCHECK
+FILE * AE_API u8fopen(
+	char const * const AE_RESTRICT filename,
+	char const * const AE_RESTRICT mode
+) {
+#if AE_NO_DEFAULT_UTF8
 	wchar_t * const wfilename = au8s_to_u16s_winapi(filename);
 	if (wfilename == NULL) {
 		return NULL;

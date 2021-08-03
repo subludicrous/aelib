@@ -120,7 +120,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
-      <AdditionalIncludeDirectories>$(INCLUDE)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(MSVC_INCLUDE)</AdditionalIncludeDirectories>
       <DisableLanguageExtensions>false</DisableLanguageExtensions>
       <EnforceTypeConversionRules>true</EnforceTypeConversionRules>
       <AdditionalOptions>/Zc:throwingNew /Zc:externConstexpr /Zc:__cplusplus /Zc:preprocessor %(AdditionalOptions)</AdditionalOptions>
@@ -139,9 +139,9 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
-      <AdditionalIncludeDirectories>$(INCLUDE)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(MSVC_INCLUDE)</AdditionalIncludeDirectories>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
       <EnforceTypeConversionRules>true</EnforceTypeConversionRules>
       <DisableLanguageExtensions>false</DisableLanguageExtensions>
@@ -158,19 +158,17 @@
   <ItemGroup>
     <ClInclude Include="include\ae\ae.hpp" />
     <ClInclude Include="include\ae\base.h" />
+    <ClInclude Include="include\ae\byte.hpp" />
     <ClInclude Include="include\ae\stdio.h" />
-    <ClInclude Include="include\ae\string.h" />
     <ClInclude Include="include\ae\unicode.hpp" />
     <ClInclude Include="include\ae\util.hpp" />
-    <ClInclude Include="include\ae\winspec.h" />
+    <ClInclude Include="include\ae\win_u8.h" />
     <ClInclude Include="include\winapi_imports.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\ae\ae.cpp" />
     <ClCompile Include="src\ae\stdio.c" />
-    <ClCompile Include="src\ae\string.c" />
-    <ClCompile Include="src\ae\win_u8_16.cpp" />
-    <ClCompile Include="src\ae\winstr.c" />
+    <ClCompile Include="src\ae\win_u8.cpp" />
     <ClCompile Include="src\ae\win_u8.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

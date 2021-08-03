@@ -30,19 +30,19 @@
     <ClInclude Include="include\ae\stdio.h">
       <Filter>Header Files\ae</Filter>
     </ClInclude>
-    <ClInclude Include="include\ae\string.h">
-      <Filter>Header Files\ae</Filter>
-    </ClInclude>
     <ClInclude Include="include\ae\unicode.hpp">
       <Filter>Header Files\ae</Filter>
     </ClInclude>
+    <ClInclude Include="include\ae\win_u8.h">
+      <Filter>Header Files\ae</Filter>
+    </ClInclude>
     <ClInclude Include="include\winapi_imports.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\ae</Filter>
     </ClInclude>
     <ClInclude Include="include\ae\util.hpp">
       <Filter>Header Files\ae</Filter>
     </ClInclude>
-    <ClInclude Include="include\ae\winspec.h">
+    <ClInclude Include="include\ae\byte.hpp">
       <Filter>Header Files\ae</Filter>
     </ClInclude>
   </ItemGroup>
@@ -53,16 +53,10 @@
     <ClCompile Include="src\ae\stdio.c">
       <Filter>Source Files\ae</Filter>
     </ClCompile>
-    <ClCompile Include="src\ae\string.c">
-      <Filter>Source Files\ae</Filter>
-    </ClCompile>
     <ClCompile Include="src\ae\win_u8.c">
       <Filter>Source Files\ae</Filter>
     </ClCompile>
-    <ClCompile Include="src\ae\win_u8_16.cpp">
-      <Filter>Source Files\ae</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ae\winstr.c">
+    <ClCompile Include="src\ae\win_u8.cpp">
       <Filter>Source Files\ae</Filter>
     </ClCompile>
   </ItemGroup>

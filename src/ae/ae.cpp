@@ -1,97 +1,32 @@
-// © Nikola Stepanoski
+// © subludicrous
 // SPDX-License-Identifier: BSL-1.0
 
 #include <ae/ae.hpp>
-#include <ae/winspec.h>
-#include <cwchar>
+#include <ae/win_u8.h>
+#include <iostream>
 
 namespace ae {
-
-#ifdef WINCHECK
-
-    bool win_in_u8::good() const {
-        return std::wcin.good();
+    std::string getline(char const delim) {
+        if constexpr (AE_NO_DEFAULT_UTF8) {
+            std::wstring ws;
+            std::getline(
+                std::wcin,
+                ws,
+                wchar_t{ static_cast<unsigned char>(delim) }
+            );
+            return u16_to_u8(ws);
+        } else {
+            std::string s;
+            std::getline(std::cin, s, delim);
+            return s;
+        }
     }
-
-    win_in_u8& win_in_u8::operator>>(bool& val) {
-        std::wcin >> val;
-        return *this;
-    }
-
-    win_in_u8& win_in_u8::operator>>(unsigned short& val) {
-        std::wcin >> val;
-        return *this;
-    }
-    win_in_u8& win_in_u8::operator>>(short& val) {
-        std::wcin >> val;
-        return *this;
-    }
-
-    win_in_u8& win_in_u8::operator>>(unsigned int& val) {
-        std::wcin >> val;
-        return *this;
-    }
-
-    win_in_u8& win_in_u8::operator>>(int& val) {
-        std::wcin >> val;
-        return *this;
-    }
-
-    win_in_u8& win_in_u8::operator>>(unsigned long& val) {
-        std::wcin >> val;
-        return *this;
-    }
-
-    win_in_u8& win_in_u8::operator>>(long& val) {
-        std::wcin >> val;
-        return *this;
-    }
-
-    win_in_u8& win_in_u8::operator>>(unsigned long long& val) {
-        std::wcin >> val;
-        return *this;
-    }
-
-    win_in_u8& win_in_u8::operator>>(long long& val) {
-        std::wcin >> val;
-        return *this;
-    }
-
-    win_in_u8& win_in_u8::operator>>(float& val) {
-        std::wcin >> val;
-        return *this;
-    }
-
-    win_in_u8& win_in_u8::operator>>(double& val) {
-        std::wcin >> val;
-        return *this;
-    }
-
-    win_in_u8& win_in_u8::operator>>(long double& val) {
-        std::wcin >> val;
-        return *this;
-    }
-
-    win_in_u8& win_in_u8::operator>>(std::string& val) {
-        std::wstring wval;
-        std::wcin >> wval;
-        val = u16_to_u8(wval);
-        return *this;
-    }
-
-    std::string win_in_u8::read_line() {
-        std::wstring wstr;
-        std::getline(std::wcin, wstr);
-        return u16_to_u8(wstr);
-    }
-
-    win_in_u8 u8cin{};
 
 #ifdef _MSC_VER
     // uninit'd vals wouldn't be used
 #pragma warning(suppress: 26495)
 #endif
-    unicodization::unicodization(int const argc, char ** & argv) {
+    u8ization::u8ization(int const argc, char ** & argv) noexcept {
         aight = main_u8ize(&original_mode, &cp, &prev_mode, &handle);
         if (!aight) {
             return;
@@ -107,32 +42,34 @@ namespace ae {
         this->argv = u8argv;
     }
 
-    unicodization::unicodization() : argc(0), argv(nullptr) {
+#ifdef _MSC_VER
+    // uninit'd vals wouldn't be used
+#pragma warning(suppress: 26495)
+#endif
+    u8ization::u8ization() noexcept : argv(nullptr) {
         aight = main_u8ize(&original_mode, &cp, &prev_mode, &handle);
     }
 
-    unicodization::~unicodization() {
+    u8ization::~u8ization() {
         if (aight) {
             main_deu8ize(original_mode, cp, prev_mode, handle);
-            if (argc) {
+            if (argv != nullptr) {
                 free_u8argv(argc, argv);
             }
         }
     }
 
-    unicodization::operator bool() const noexcept {
+    u8ization::operator bool() const noexcept {
         return aight;
     }
 
-#endif
-
-    std::vector<std::string_view> AEAPI cppize(
+    std::vector<std::string_view> AE_API cppize(
         int const argc,
         char const * const * const argv
     ) {
         std::vector<std::string_view> cppargs;
         cppargs.reserve(static_cast<std::size_t>(argc));
-        for (auto argn = 0; argn < argc; argn++) {
+        for (int argn = 0; argn < argc; argn++) {
             cppargs.push_back(argv[argn]);
         }
         return cppargs;
