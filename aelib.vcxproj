@@ -168,8 +168,8 @@
   <ItemGroup>
     <ClCompile Include="src\ae\ae.cpp" />
     <ClCompile Include="src\ae\stdio.c" />
-    <ClCompile Include="src\ae\win_u8.cpp" />
-    <ClCompile Include="src\ae\win_u8.c" />
+    <ClCompile Include="src\ae\win_u8_convpp.cpp" />
+    <ClCompile Include="src\ae\win_u8ization.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

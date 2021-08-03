@@ -53,10 +53,10 @@
     <ClCompile Include="src\ae\stdio.c">
       <Filter>Source Files\ae</Filter>
     </ClCompile>
-    <ClCompile Include="src\ae\win_u8.c">
+    <ClCompile Include="src\ae\win_u8ization.c">
       <Filter>Source Files\ae</Filter>
     </ClCompile>
-    <ClCompile Include="src\ae\win_u8.cpp">
+    <ClCompile Include="src\ae\win_u8_convpp.cpp">
       <Filter>Source Files\ae</Filter>
     </ClCompile>
   </ItemGroup>

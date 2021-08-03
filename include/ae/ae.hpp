@@ -1,8 +1,8 @@
 // © subludicrous
 // SPDX-License-Identifier: BSL-1.0
 
-#ifndef AE_LIB_HPP
-#define AE_LIB_HPP
+#ifndef AE_AE_HPP
+#define AE_AE_HPP
 
 #include <ae/base.h>
 #include <vector>
@@ -15,7 +15,7 @@ namespace ae {
     */
     std::string getline(char delim = '\n');
 
-#ifdef AE_NO_DEFAULT_UTF8
+#if AE_NO_DEFAULT_UTF8
 
     class u8ization final {
     private:
@@ -41,7 +41,7 @@ namespace ae {
 
     std::vector<std::string_view> AE_API cppize(int argc, char const * const * argv);
 
-#endif
+#endif // AE_NO_DEFAULT_UTF8
 }
 
 #endif

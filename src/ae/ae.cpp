@@ -66,6 +66,7 @@ namespace ae {
     }
 
     void u8ization::check_opt_exit(char const * const output) const noexcept {
+        if (aight) return;
         if (output != nullptr) {
             std::fputs(output, stderr);
         }
