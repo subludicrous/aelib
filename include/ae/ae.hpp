@@ -32,7 +32,11 @@ namespace ae {
         u8ization() noexcept;
         u8ization(int argc, char**& argv) noexcept;
         ~u8ization();
+        
         operator bool() const noexcept;
+        void check_opt_exit(
+            char const * output = "Failed to initialize UTF-8 environment.\n"
+        ) const noexcept;
     };
 
     std::vector<std::string_view> AE_API cppize(int argc, char const * const * argv);

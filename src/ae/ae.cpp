@@ -4,6 +4,8 @@
 #include <ae/ae.hpp>
 #include <ae/win_u8.h>
 #include <iostream>
+#include <cstdlib>
+#include <cstdio>
 
 namespace ae {
     std::string getline(char const delim) {
@@ -61,6 +63,13 @@ namespace ae {
 
     u8ization::operator bool() const noexcept {
         return aight;
+    }
+
+    void u8ization::check_opt_exit(char const * const output) const noexcept {
+        if (output != nullptr) {
+            std::fputs(output, stderr);
+        }
+        std::exit(EXIT_FAILURE);
     }
 
     std::vector<std::string_view> AE_API cppize(
