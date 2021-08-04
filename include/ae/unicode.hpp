@@ -1,4 +1,4 @@
-// © subludicrous
+// Â© subludicrous
 // SPDX-License-Identifier: BSL-1.0
 
 #ifndef AE_UNICODE_HPP
@@ -18,16 +18,10 @@ namespace ae {
     [[nodiscard]]
     constexpr auto u8bytes(char const c) noexcept {
         unsigned int u8s{};
-        auto const scheck = static_cast<unsigned char>(c);
-        for (unsigned int x = scheck; x & 0x80u; x <<= 1u) {
+        for (byte x = c; x & 0x80_b; x <<= 1u) {
             ++u8s;
         }
         return u8s;
-    }
-
-    [[nodiscard]]
-    constexpr auto u8bytes(byte const b) {
-        return u8bytes(std::to_integer<char>(b));
     }
 
     // assumes legit UTF-8
@@ -47,10 +41,10 @@ namespace ae {
     [[nodiscard]]
     constexpr char32_t u8_to_u32(char const * const u8str) noexcept {
         constexpr auto cont_mask = 0x80_b;
-        auto const first = to_byte(*u8str);
-        if (!to_int(first & cont_mask)) {
+        byte const first = *u8str;
+        if (!(first & cont_mask)) {
             // i.e. is ASCII
-            return to_int(first);
+            return first;
         }
         auto const cont_byte_count = u8bytes(first) - 1u;
         // move the 6 x's of cont. bs 10XX'XXXX into result
@@ -58,11 +52,11 @@ namespace ae {
         // going from last to first
         for (auto i = cont_byte_count; i > 0u; --i) {
             // get byte
-            auto cb = to_byte(*(u8str + i));
+            byte cb = *(u8str + i);
             // remove cont. mask
             cb &= ~cont_mask;
             // make a part of the codepoint
-            char32_t part = to_int(cb);
+            char32_t part = cb;
             // shift these bits to the right place
             part <<= (6 * (cont_byte_count - i));
             result |= part;
@@ -70,7 +64,7 @@ namespace ae {
         // + 1 for 1st byte
         auto const first_byte_mask = 0xFF_b >> (cont_byte_count + 1);
         auto const fb_shift = (6 * cont_byte_count);
-        result |= to_int(first & first_byte_mask) << fb_shift;
+        result |= char32_t(first & first_byte_mask) << fb_shift;
         return result;
     }
 
@@ -141,7 +135,7 @@ namespace ae {
             }
             while (pos < codepoint_end) {
                 ++pos;
-                if (!to_int(to_byte(str[pos]) & 0x80_b)) {
+                if (!(byte(str[pos]) & 0x80_b)) {
                     // not cont. b
                     return false;
                 }
@@ -160,7 +154,7 @@ namespace ae {
     }
 
     // assumes legit UTF-32, writes null
-    // @return required size w/o '\0'
+    // @return required size w/o '\\0'
     constexpr std::size_t u32_to_u8(
         char32_t codepoint,
         char * const out
@@ -185,18 +179,17 @@ namespace ae {
         byte u8part{};
         for (auto bc2 = bcount - 1u; bc2 >= 1; bc2--) {
             constexpr auto cont_part = 0x3F_b;
-            u8part = to_byte(codepoint);
+            u8part = codepoint;
             codepoint >>= shift;
             u8part &= cont_part; // xx11 1111
             u8part |= contb; // 10xx xxxx
-            out[bc2] = std::to_integer<char>(u8part);
+            out[bc2] = u8part;
         }
         // first
-        constexpr auto bm0 = 0xF0_b;
-        auto const bmask = bm0 << (4u - bcount);
-        u8part = to_byte(codepoint);
+        auto const bmask = 0xF0_b << (4u - bcount);
+        u8part = codepoint;
         u8part |= bmask; // add bytes' count mask
-        out[0] = std::to_integer<char>(u8part);
+        out[0] = u8part;
 
         return bcount;
     }
