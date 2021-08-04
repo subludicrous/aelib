@@ -60,4 +60,7 @@
       <Filter>Source Files\ae</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <None Include=".editorconfig" />
+  </ItemGroup>
 </Project>
