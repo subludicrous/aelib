@@ -44,9 +44,9 @@ namespace ae {
         byte const first = *u8str;
         if (!(first & cont_mask)) {
             // i.e. is ASCII
-            return first;
+            return char32_t(first);
         }
-        auto const cont_byte_count = u8bytes(first) - 1u;
+        auto const cont_byte_count = u8bytes(char(first)) - 1u;
         // move the 6 x's of cont. bs 10XX'XXXX into result
         char32_t result{};
         // going from last to first
@@ -56,7 +56,7 @@ namespace ae {
             // remove cont. mask
             cb &= ~cont_mask;
             // make a part of the codepoint
-            char32_t part = cb;
+            auto part = char32_t(cb);
             // shift these bits to the right place
             part <<= (6 * (cont_byte_count - i));
             result |= part;
@@ -183,13 +183,13 @@ namespace ae {
             codepoint >>= shift;
             u8part &= cont_part; // xx11 1111
             u8part |= contb; // 10xx xxxx
-            out[bc2] = u8part;
+            out[bc2] = char(u8part);
         }
         // first
         auto const bmask = 0xF0_b << (4u - bcount);
         u8part = codepoint;
         u8part |= bmask; // add bytes' count mask
-        out[0] = u8part;
+        out[0] = char(u8part);
 
         return bcount;
     }
@@ -203,9 +203,7 @@ namespace ae {
 
     [[nodiscard]]
     constexpr auto is_ascii(char const c) noexcept {
-        if (static_cast<unsigned char>(c) & 0x80u) {
-            return false;
-        } else return true;
+        return !bool(0x80_b & c);
     }
 
     [[nodiscard]]

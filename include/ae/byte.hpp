@@ -29,7 +29,7 @@ namespace ae {
 
         template <std::integral T>
         [[nodiscard]]
-        constexpr operator T() const noexcept {
+        constexpr explicit operator T() const noexcept {
             return static_cast<T>(m_b);
         }
         [[nodiscard]]
