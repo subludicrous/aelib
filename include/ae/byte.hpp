@@ -90,7 +90,7 @@ namespace ae {
     inline namespace literals {
         [[nodiscard]]
         constexpr byte operator""_b(unsigned long long int val) {
-            return byte(val);
+            return static_cast<byte>(val);
         }
     }
 }
