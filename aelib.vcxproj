@@ -159,6 +159,7 @@
     <ClInclude Include="include\ae\ae.hpp" />
     <ClInclude Include="include\ae\base.h" />
     <ClInclude Include="include\ae\byte.hpp" />
+    <ClInclude Include="include\ae\memory.h" />
     <ClInclude Include="include\ae\stdio.h" />
     <ClInclude Include="include\ae\unicode.hpp" />
     <ClInclude Include="include\ae\util.hpp" />
@@ -167,6 +168,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\ae\ae.cpp" />
+    <ClCompile Include="src\ae\memory.c" />
     <ClCompile Include="src\ae\stdio.c" />
     <ClCompile Include="src\ae\win_u8_convpp.cpp" />
     <ClCompile Include="src\ae\win_u8ization.c" />
