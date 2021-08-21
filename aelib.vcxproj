@@ -160,6 +160,7 @@
     <ClInclude Include="include\ae\base.h" />
     <ClInclude Include="include\ae\byte.hpp" />
     <ClInclude Include="include\ae\memory.h" />
+    <ClInclude Include="include\ae\new.hpp" />
     <ClInclude Include="include\ae\stdio.h" />
     <ClInclude Include="include\ae\unicode.hpp" />
     <ClInclude Include="include\ae\util.hpp" />

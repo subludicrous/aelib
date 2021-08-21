@@ -48,6 +48,9 @@
     <ClInclude Include="include\ae\memory.h">
       <Filter>Header Files\ae</Filter>
     </ClInclude>
+    <ClInclude Include="include\ae\new.hpp">
+      <Filter>Header Files\ae</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\ae\ae.cpp">
