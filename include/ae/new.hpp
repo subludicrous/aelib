@@ -1,3 +1,5 @@
+// © subludicrous
+// SPDX-License-Identifier: BSL-1.0
 
 #ifndef AE_NEW_HPP
 #define AE_NEW_HPP
