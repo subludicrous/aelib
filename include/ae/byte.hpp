@@ -60,27 +60,22 @@ namespace ae {
         constexpr byte operator compl() const noexcept {
             return compl calc_type(m_b);
         }
-        [[nodiscard]]
         constexpr byte& operator<<=(std::integral auto const shift) noexcept {
             *this = *this << shift;
             return *this;
         }
-        [[nodiscard]]
         constexpr byte& operator>>=(std::integral auto const shift) noexcept {
             *this = *this >> shift;
             return *this;
         }
-        [[nodiscard]]
         constexpr byte& operator&=(byte const other) noexcept {
             *this = *this & other;
             return *this;
         }
-        [[nodiscard]]
         constexpr byte& operator|=(byte const other) noexcept {
             *this = *this | other;
             return *this;
         }
-        [[nodiscard]]
         constexpr byte& operator xor_eq(byte const other) noexcept {
             *this = *this xor other;
             return *this;
