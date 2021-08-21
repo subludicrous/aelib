@@ -1,16 +1,22 @@
-// © subludicrous
+// Â© subludicrous
 // SPDX-License-Identifier: BSL-1.0
 
 #ifndef AE_BASE_H
 #define AE_BASE_H
 
 #ifdef __cplusplus
+    #ifdef _MSC_VER
+        #define AE_CXX_LANG _MSVC_LANG
+    #else
+        #define AE_CXX_LANG __cplusplus
+    #endif
+
     #define AE_C_BEGIN extern "C" {
     #define AE_C_END }
     
-    #if __cplusplus > 201703L
+    #if AE_CXX_LANG > 201703L
         #define AECONSTEXPR20 constexpr
-    #elif __cplusplus == 201703L
+    #elif AE_CXX_LANG == 201703L
         #define AECONSTEXPR20 inline
     #else
         #error "Requires C++17 or later"
