@@ -4,7 +4,7 @@
 #include <ae/base.h>
 
 #ifndef __cplusplus
-    #include <stddef.h>
+    #include <stdlib.h>
 #else
     #include <cstdlib>
 #endif
@@ -30,6 +30,11 @@ inline T *pmalloc() noexcept {
 template <typename T>
 inline void pfree(T *const ptr) noexcept {
     std::free(ptr);
+}
+
+template <typename T>
+inline T *prealloc(T *const ptr, std::size_t const amount) noexcept {
+    return static_cast<T *>(std::realloc(ptr, amount * sizeof(T)));
 }
 
 template <
