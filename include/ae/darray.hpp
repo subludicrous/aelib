@@ -12,16 +12,13 @@
 #include <ae/base.h>
 #include <ae/memory.hpp>
 
-AE_BEGIN
-
-template <
-    typename T, 
-    typename CAllocator = c_allocator<T, abort_noexcept>
->
-struct darray {
+namespace ae {
+    template <typename T, typename CAllocator = basic_c_allocator<T>>
+    struct darray {
     using value_type = T;
     using allocator_type = CAllocator;
-    static_assert(is_same_v<value_type, typename allocator_type::value_type>,
+    static_assert(
+        is_same_v<value_type, typename allocator_type::value_type>,
         "CAllocator must have the same value_type.");
 
     [[nodiscard]]
@@ -116,32 +113,31 @@ struct darray {
         return nullptr;
     }
 
-private:
-    value_type *mem;
-    static constexpr std::size_t res_elem_amount = 32;
-    std::size_t reserved;
-    std::size_t used;
+    private:
+        value_type *mem;
+        static constexpr std::size_t res_elem_amount = 32;
+        std::size_t reserved;
+        std::size_t used;
 
-    bool reserve_opt() noexcept {
-        // reserves more if all reserved space has been used
-        if (used == reserved) {
-            auto const nres = used + res_elem_amount; // new capacity
-            // reserve more:
-            return reserve_unchecked(nres);
+        bool reserve_opt() noexcept {
+            // reserves more if all reserved space has been used
+            if (used == reserved) {
+                auto const nres = used + res_elem_amount; // new capacity
+                // reserve more:
+                return reserve_unchecked(nres);
+            }
+            return true;
         }
-        return true;
-    }
 
-    bool reserve_unchecked(std::size_t const req) noexcept {
-        auto const nmem = allocator_type::realloc_fn(mem, req);
-        if (nmem) {
-            mem = nmem;
-            reserved = req;
+        bool reserve_unchecked(std::size_t const req) noexcept {
+            auto const nmem = allocator_type::realloc_fn(mem, req);
+            if (nmem) {
+                mem = nmem;
+                reserved = req;
+            }
+            return nmem;
         }
-        return nmem;
-    }
-};
-
-AE_END
+    };
+}
 
 #endif // AE_DARRAY_HPP
