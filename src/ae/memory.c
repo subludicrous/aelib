@@ -1,6 +1,7 @@
 // © subludicrous
 // SPDX-License-Identifier: BSL-1.0
 
+#include <ae/base.h>
 #include <stdlib.h>
 #include <stdbool.h>
 #include <stdint.h>
@@ -9,7 +10,7 @@ static bool is_power_of_two(size_t const s) {
     return (s != 0u) && (s & (s - 1u)) == 0;
 }
 
-void *aligned_malloc(
+extern void *AE_API aligned_malloc(
     size_t const total_size,
     size_t const alignment
 ) {
@@ -32,7 +33,7 @@ void *aligned_malloc(
     return to_dispatch;
 }
 
-void aligned_free(void *const ptr) {
+extern void AE_API aligned_free(void *const ptr) {
     uintptr_t *pactual = ptr;
     --pactual;
     free((void *) *pactual);

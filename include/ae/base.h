@@ -54,3 +54,9 @@
         #define _CRT_NONSTDC_NO_WARNINGS
     #endif
 #endif
+
+typedef long long int llong;
+typedef unsigned long long int ullong;
+typedef unsigned int uint;
+typedef unsigned short ushort;
+typedef unsigned char uchar;
