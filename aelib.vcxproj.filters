@@ -45,13 +45,19 @@
     <ClInclude Include="include\ae\byte.hpp">
       <Filter>Header Files\ae</Filter>
     </ClInclude>
-    <ClInclude Include="include\ae\memory.h">
-      <Filter>Header Files\ae</Filter>
-    </ClInclude>
-    <ClInclude Include="include\ae\new.hpp">
+    <ClInclude Include="include\ae\memory.hpp">
       <Filter>Header Files\ae</Filter>
     </ClInclude>
     <ClInclude Include="include\ae\test_struct.hpp">
+      <Filter>Header Files\ae</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ae\darray.hpp">
+      <Filter>Header Files\ae</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ae\type_traits.hpp">
+      <Filter>Header Files\ae</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ae\memory.h">
       <Filter>Header Files\ae</Filter>
     </ClInclude>
   </ItemGroup>

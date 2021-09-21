@@ -159,10 +159,12 @@
     <ClInclude Include="include\ae\ae.hpp" />
     <ClInclude Include="include\ae\base.h" />
     <ClInclude Include="include\ae\byte.hpp" />
+    <ClInclude Include="include\ae\darray.hpp" />
     <ClInclude Include="include\ae\memory.h" />
-    <ClInclude Include="include\ae\new.hpp" />
+    <ClInclude Include="include\ae\memory.hpp" />
     <ClInclude Include="include\ae\stdio.h" />
     <ClInclude Include="include\ae\test_struct.hpp" />
+    <ClInclude Include="include\ae\type_traits.hpp" />
     <ClInclude Include="include\ae\unicode.hpp" />
     <ClInclude Include="include\ae\util.hpp" />
     <ClInclude Include="include\ae\win_u8.h" />
