@@ -93,15 +93,13 @@ namespace ae {
 
     template <
         typename T,
-        void (&AllocFailHandler)() noexcept,
+        void (&FailHandler)() noexcept,
         T *(&AllocFn)(std::size_t) noexcept =
-        tmalloc_s<T, AllocFailHandler>,
-        T *(&ReAllocFn)(T *, std::size_t) noexcept =
-        trealloc_s<T, AllocFailHandler>,
-        void(&FreeFn)(T *) noexcept =
-        tfree<T>
-    >
-        struct c_allocator {
+        tmalloc_s<T, FailHandler>,
+        T *(&ReAllocFn)(T *, std::size_t) noexcept = 
+        trealloc_s<T, FailHandler>,
+        void (&FreeFn)(T *) noexcept = tfree<T>>
+    struct c_allocator {
         using value_type = T;
         using alloc_fn_t = value_type * (std::size_t) noexcept;
         using realloc_fn_t = T * (value_type *, std::size_t) noexcept;
@@ -113,10 +111,16 @@ namespace ae {
 
     template <typename T>
     using basic_c_allocator = c_allocator<T, abort_noexcept>;
+    template <typename T>
+    using unchecked_allocator = c_allocator<
+        T,
+        abort_noexcept, // unused
+        tmalloc<T>,
+        trealloc<T>,
+        tfree<T>>;
 
-    template <typename T, void(&CleanFn)(T) noexcept>
-    class autoclean {
-    public:
+    template <typename T, void (&CleanFn)(T) noexcept>
+    struct autoclean {
         using value_type = T;
         static constexpr decltype(auto) clean_fn = CleanFn;
         value_type value;
@@ -126,10 +130,6 @@ namespace ae {
         }
         constexpr ~autoclean() {
             clean_fn(value);
-        }
-        [[nodiscard]]
-        explicit constexpr operator value_type() const noexcept {
-            return value;
         }
         void operator=(autoclean const &) = delete;
         void operator=(autoclean &&) = delete;
